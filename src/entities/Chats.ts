@@ -1,4 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Users } from './Users';
 
 @Entity({ schema: 'study-meet', name: 'chats' })
 export class Chats {
@@ -8,5 +17,17 @@ export class Chats {
   @Column('text', { name: 'chatDetail' })
   chatDetail: string;
 
-  // ManyToOne  유저아이디 두개~~
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @ManyToOne(() => Users, (user) => user.senderIds)
+  @JoinColumn({ name: 'sender_id' })
+  sender_id: Users;
+
+  @ManyToOne(() => Users, (user) => user.receiverIds)
+  @JoinColumn({ name: 'reciever_id' })
+  reciever_id: Users;
 }

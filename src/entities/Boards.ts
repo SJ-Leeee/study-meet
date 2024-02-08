@@ -1,4 +1,17 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Users } from './Users';
+import { Board_image } from './Board_image';
+import { Comments } from './Comments';
+import { Scrabs } from './Scrabs';
 
 @Entity({ schema: 'study-meet', name: 'boards' })
 export class Boards {
@@ -8,7 +21,7 @@ export class Boards {
   @Column('varchar', { length: 255, name: 'title' })
   title: string;
 
-  @Column('text', { name: 'title' })
+  @Column('text', { name: 'content' })
   content: string;
 
   @Column('int', { name: 'viewCount' })
@@ -17,6 +30,24 @@ export class Boards {
   @Column('int', { name: 'scrabCount' })
   scrabCount: number;
 
-  // ManyToOne  유저아이디
-  // OneToMany  세개
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @ManyToOne(() => Users, (user) => user.boards)
+  @JoinColumn({ name: 'user_id' })
+  user_id: Users;
+
+  @OneToMany(() => Board_image, (image) => image.board_id, { cascade: true })
+  boardImages: Board_image[];
+
+  @OneToMany(() => Comments, (comment) => comment.board_id, {
+    cascade: true,
+  })
+  comments: Comments[];
+
+  @OneToMany(() => Scrabs, (scrab) => scrab.board_id, { cascade: true })
+  scrabs: Scrabs[];
 }

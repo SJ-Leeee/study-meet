@@ -1,4 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Users } from './Users';
 
 @Entity({ schema: 'study-meet', name: 'reports' })
 export class Reports {
@@ -11,5 +20,17 @@ export class Reports {
   @Column('text', { name: 'reportImagePath' })
   reportImagePath: string;
 
-  // 튜터인포아이디 ManyToOne
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @ManyToOne(() => Users, (user) => user.reportUserIds)
+  @JoinColumn({ name: 'user_id' })
+  user_id: Users;
+
+  @ManyToOne(() => Users, (user) => user.reportedUserIds)
+  @JoinColumn({ name: 'reported_user_id' })
+  reported_user_id: Users;
 }

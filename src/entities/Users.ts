@@ -5,11 +5,14 @@ import {
   OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToOne,
 } from 'typeorm';
 import { Chats } from './Chats';
 import { Boards } from './Boards';
 import { Reports } from './Reports';
 import { Friends } from './Friends';
+import { Comments } from './Comments';
+import { Scrabs } from './Scrabs';
 
 @Entity({ schema: 'study-meet', name: 'users' })
 export class Users {
@@ -40,18 +43,32 @@ export class Users {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  //   @OneToMany(() => Chats, (chat) => chat.sender)
-  //   sentChats: Chats[];
+  @OneToMany(() => Reports, (report) => report.user_id, { cascade: true })
+  reportUserIds: Reports[];
 
-  //   @OneToMany(() => Chats, (chat) => chat.reciever)
-  //   recievedChats: Chats[];
+  @OneToMany(() => Reports, (report) => report.reported_user_id, {
+    cascade: true,
+  })
+  reportedUserIds: Reports[];
 
-  //   @OneToMany(() => Boards, (board) => board.user)
-  //   boards: Boards[];
+  @OneToMany(() => Friends, (friend) => friend.my_id, { cascade: true })
+  myIds: Friends[];
 
-  //   @OneToMany(() => Reports, (report) => report.user)
-  //   reports: Reports[];
+  @OneToMany(() => Friends, (friend) => friend.target_id, { cascade: true })
+  targetIds: Friends[];
 
-  //   @OneToMany(() => Friends, (friend) => friend.my)
-  //   friends: Friends[];
+  @OneToMany(() => Chats, (chat) => chat.sender_id, { cascade: true })
+  senderIds: Chats[];
+
+  @OneToMany(() => Chats, (chat) => chat.reciever_id, { cascade: true })
+  receiverIds: Chats[];
+
+  @OneToMany(() => Boards, (board) => board.user_id, { cascade: true })
+  boards: Boards[];
+
+  @OneToMany(() => Comments, (comment) => comment.user_id, { cascade: true })
+  comments: Comments[];
+
+  @OneToMany(() => Scrabs, (scrab) => scrab.user_id, { cascade: true })
+  scrabs: Scrabs[];
 }
