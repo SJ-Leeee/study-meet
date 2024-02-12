@@ -14,6 +14,7 @@ import { Friends } from './entities/Friends';
 import { Reports } from './entities/Reports';
 import { Scrabs } from './entities/Scrabs';
 import { Board_image } from './entities/Board_image';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -40,12 +41,13 @@ import { Board_image } from './entities/Board_image';
         Scrabs,
         Board_image,
       ],
-      synchronize: true,
+      synchronize: false,
       keepConnectionAlive: true,
       logging: true,
       charset: 'utf8mb4',
       // 이모티콘 쓰기 위해
     }),
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
