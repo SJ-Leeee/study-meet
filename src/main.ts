@@ -10,5 +10,6 @@ async function bootstrap() {
     module.hot.accept();
     module.hot.dispose(() => app.close());
   }
+  console.log(`server on!!`)
 }
 bootstrap();

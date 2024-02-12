@@ -1,6 +1,7 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { registrationUserDto } from './dto/registrationUser.dto';
+import { LocalServiceAuthGuard } from './guards/local-service.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -15,5 +16,12 @@ export class AuthController {
     );
     userDto.password = hashedPassword;
     return await this.authService.registrationUser(userDto);
+  }
+
+  // 테스트중
+  @Post('/login')
+  @UseGuards(LocalServiceAuthGuard)
+  async login(@Req() req) {
+    return req.user;
   }
 }
