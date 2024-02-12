@@ -6,10 +6,10 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Users } from './Users';
+import { UserEntity } from './Users';
 
 @Entity({ schema: 'study-meet', name: 'friends' })
-export class Friends {
+export class FriendEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'friendId' })
   friendId: number;
 
@@ -19,11 +19,11 @@ export class Friends {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => Users, (user) => user.myIds)
+  @ManyToOne(() => UserEntity, (user) => user.myIds)
   @JoinColumn({ name: 'my_id' })
-  my_id: Users;
+  my_id: UserEntity;
 
-  @ManyToOne(() => Users, (user) => user.targetIds)
+  @ManyToOne(() => UserEntity, (user) => user.targetIds)
   @JoinColumn({ name: 'target_id' })
-  target_id: Users;
+  target_id: UserEntity;
 }

@@ -1,14 +1,14 @@
 import { DataSource } from 'typeorm';
-import { Board_image } from './src/entities/Board_image';
-import { Boards } from './src/entities/Boards';
-import { Chats } from './src/entities/Chats';
-import { Comments } from './src/entities/Comments';
-import { Friends } from './src/entities/Friends';
-import { Reports } from './src/entities/Reports';
-import { Scrabs } from './src/entities/Scrabs';
-import { Tutor_certification_image } from './src/entities/Tutor_certification_image';
-import { Tutor_info } from './src/entities/Tutor_info';
-import { Users } from './src/entities/Users';
+import { Board_imageEntity } from './src/entities/Board_image';
+import { BoardEntity } from './src/entities/Boards';
+import { ChatEntity } from './src/entities/Chats';
+import { CommentEntity } from './src/entities/Comments';
+import { FriendEntity } from './src/entities/Friends';
+import { ReportEntity } from './src/entities/Reports';
+import { ScrabEntity } from './src/entities/Scrabs';
+import { Tutor_certification_imageEntity } from './src/entities/Tutor_certification_image';
+import { Tutor_infoEntity } from './src/entities/Tutor_info';
+import { UserEntity } from './src/entities/Users';
 
 require('dotenv').config();
 
@@ -20,16 +20,16 @@ const dataSource = new DataSource({
   password: process.env.MYSQL_PASSWORD,
   database: process.env.MYSQL_DATABASE,
   entities: [
-    Users,
-    Boards,
-    Board_image,
-    Tutor_info,
-    Tutor_certification_image,
-    Comments,
-    Chats,
-    Friends,
-    Reports,
-    Scrabs,
+    UserEntity,
+    BoardEntity,
+    Board_imageEntity,
+    Tutor_infoEntity,
+    Tutor_certification_imageEntity,
+    CommentEntity,
+    ChatEntity,
+    FriendEntity,
+    ReportEntity,
+    ScrabEntity,
   ],
   migrations: [__dirname + '/src/migrations/*.ts'],
   charset: 'utf8mb4_general_ci',

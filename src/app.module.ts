@@ -4,16 +4,16 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Users } from './entities/Users';
-import { Boards } from './entities/Boards';
-import { Tutor_info } from './entities/Tutor_info';
-import { Tutor_certification_image } from './entities/Tutor_certification_image';
-import { Comments } from './entities/Comments';
-import { Chats } from './entities/Chats';
-import { Friends } from './entities/Friends';
-import { Reports } from './entities/Reports';
-import { Scrabs } from './entities/Scrabs';
-import { Board_image } from './entities/Board_image';
+import { UserEntity } from './entities/Users';
+import { BoardEntity } from './entities/Boards';
+import { Tutor_infoEntity } from './entities/Tutor_info';
+import { Tutor_certification_imageEntity } from './entities/Tutor_certification_image';
+import { CommentEntity } from './entities/Comments';
+import { ChatEntity } from './entities/Chats';
+import { FriendEntity } from './entities/Friends';
+import { ReportEntity } from './entities/Reports';
+import { ScrabEntity } from './entities/Scrabs';
+import { Board_imageEntity } from './entities/Board_image';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
@@ -30,16 +30,16 @@ import { AuthModule } from './auth/auth.module';
       password: process.env.MYSQL_PASSWORD,
       database: process.env.MYSQL_DATABASE,
       entities: [
-        Users,
-        Boards,
-        Tutor_info,
-        Tutor_certification_image,
-        Comments,
-        Chats,
-        Friends,
-        Reports,
-        Scrabs,
-        Board_image,
+        UserEntity,
+        BoardEntity,
+        Tutor_infoEntity,
+        Tutor_certification_imageEntity,
+        CommentEntity,
+        ChatEntity,
+        FriendEntity,
+        ReportEntity,
+        ScrabEntity,
+        Board_imageEntity,
       ],
       synchronize: false,
       keepConnectionAlive: true,

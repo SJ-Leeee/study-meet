@@ -9,11 +9,11 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Users } from './Users';
-import { Tutor_certification_image } from './Tutor_certification_image';
+import { UserEntity } from './Users';
+import { Tutor_certification_imageEntity } from './Tutor_certification_image';
 
 @Entity({ schema: 'study-meet', name: 'tutor_info' })
-export class Tutor_info {
+export class Tutor_infoEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'tutorInfoId' })
   tutorInfoId: number;
 
@@ -29,16 +29,16 @@ export class Tutor_info {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToOne(() => Users, { nullable: false })
+  @OneToOne(() => UserEntity, { nullable: false })
   @JoinColumn({ name: 'user_id' })
-  user_id: Users;
+  user_id: UserEntity;
 
   @OneToMany(
-    () => Tutor_certification_image,
+    () => Tutor_certification_imageEntity,
     (tutorImage) => tutorImage.tutor_info_id,
     {
       cascade: true,
     },
   )
-  tutorImages: Tutor_certification_image[];
+  tutorImages: Tutor_certification_imageEntity[];
 }

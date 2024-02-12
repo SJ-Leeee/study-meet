@@ -8,13 +8,13 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Users } from './Users';
-import { Board_image } from './Board_image';
-import { Comments } from './Comments';
-import { Scrabs } from './Scrabs';
+import { UserEntity } from './Users';
+import { Board_imageEntity } from './Board_image';
+import { CommentEntity } from './Comments';
+import { ScrabEntity } from './Scrabs';
 
 @Entity({ schema: 'study-meet', name: 'boards' })
-export class Boards {
+export class BoardEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'boardId' })
   boardId: number;
 
@@ -36,18 +36,20 @@ export class Boards {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => Users, (user) => user.boards)
+  @ManyToOne(() => UserEntity, (user) => user.boards)
   @JoinColumn({ name: 'user_id' })
-  user_id: Users;
+  user_id: UserEntity;
 
-  @OneToMany(() => Board_image, (image) => image.board_id, { cascade: true })
-  boardImages: Board_image[];
-
-  @OneToMany(() => Comments, (comment) => comment.board_id, {
+  @OneToMany(() => Board_imageEntity, (image) => image.board_id, {
     cascade: true,
   })
-  comments: Comments[];
+  boardImages: Board_imageEntity[];
 
-  @OneToMany(() => Scrabs, (scrab) => scrab.board_id, { cascade: true })
-  scrabs: Scrabs[];
+  @OneToMany(() => CommentEntity, (comment) => comment.board_id, {
+    cascade: true,
+  })
+  comments: CommentEntity[];
+
+  @OneToMany(() => ScrabEntity, (scrab) => scrab.board_id, { cascade: true })
+  scrabs: ScrabEntity[];
 }

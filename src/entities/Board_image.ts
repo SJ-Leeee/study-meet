@@ -7,10 +7,10 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Boards } from './Boards';
+import { BoardEntity } from './Boards';
 
 @Entity({ schema: 'study-meet', name: 'board_image' })
-export class Board_image {
+export class Board_imageEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'boardImageId' })
   boardImageId: number;
 
@@ -26,7 +26,7 @@ export class Board_image {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => Boards, (board) => board.boardImages)
+  @ManyToOne(() => BoardEntity, (board) => board.boardImages)
   @JoinColumn({ name: 'board_id' })
-  board_id: Boards;
+  board_id: BoardEntity;
 }

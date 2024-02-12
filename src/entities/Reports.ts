@@ -7,10 +7,10 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Users } from './Users';
+import { UserEntity } from './Users';
 
 @Entity({ schema: 'study-meet', name: 'reports' })
-export class Reports {
+export class ReportEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'reportId' })
   reportId: number;
 
@@ -26,11 +26,11 @@ export class Reports {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => Users, (user) => user.reportUserIds)
+  @ManyToOne(() => UserEntity, (user) => user.reportUserIds)
   @JoinColumn({ name: 'user_id' })
-  user_id: Users;
+  user_id: UserEntity;
 
-  @ManyToOne(() => Users, (user) => user.reportedUserIds)
+  @ManyToOne(() => UserEntity, (user) => user.reportedUserIds)
   @JoinColumn({ name: 'reported_user_id' })
-  reported_user_id: Users;
+  reported_user_id: UserEntity;
 }

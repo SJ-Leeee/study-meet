@@ -7,15 +7,15 @@ import {
   UpdateDateColumn,
   OneToOne,
 } from 'typeorm';
-import { Chats } from './Chats';
-import { Boards } from './Boards';
-import { Reports } from './Reports';
-import { Friends } from './Friends';
-import { Comments } from './Comments';
-import { Scrabs } from './Scrabs';
+import { ChatEntity } from './Chats';
+import { BoardEntity } from './Boards';
+import { ReportEntity } from './Reports';
+import { FriendEntity } from './Friends';
+import { CommentEntity } from './Comments';
+import { ScrabEntity } from './Scrabs';
 
 @Entity({ schema: 'study-meet', name: 'users' })
-export class Users {
+export class UserEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'userId' })
   userId: number;
 
@@ -43,32 +43,36 @@ export class Users {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => Reports, (report) => report.user_id, { cascade: true })
-  reportUserIds: Reports[];
+  @OneToMany(() => ReportEntity, (report) => report.user_id, { cascade: true })
+  reportUserIds: ReportEntity[];
 
-  @OneToMany(() => Reports, (report) => report.reported_user_id, {
+  @OneToMany(() => ReportEntity, (report) => report.reported_user_id, {
     cascade: true,
   })
-  reportedUserIds: Reports[];
+  reportedUserIds: ReportEntity[];
 
-  @OneToMany(() => Friends, (friend) => friend.my_id, { cascade: true })
-  myIds: Friends[];
+  @OneToMany(() => FriendEntity, (friend) => friend.my_id, { cascade: true })
+  myIds: FriendEntity[];
 
-  @OneToMany(() => Friends, (friend) => friend.target_id, { cascade: true })
-  targetIds: Friends[];
+  @OneToMany(() => FriendEntity, (friend) => friend.target_id, {
+    cascade: true,
+  })
+  targetIds: FriendEntity[];
 
-  @OneToMany(() => Chats, (chat) => chat.sender_id, { cascade: true })
-  senderIds: Chats[];
+  @OneToMany(() => ChatEntity, (chat) => chat.sender_id, { cascade: true })
+  senderIds: ChatEntity[];
 
-  @OneToMany(() => Chats, (chat) => chat.reciever_id, { cascade: true })
-  receiverIds: Chats[];
+  @OneToMany(() => ChatEntity, (chat) => chat.reciever_id, { cascade: true })
+  receiverIds: ChatEntity[];
 
-  @OneToMany(() => Boards, (board) => board.user_id, { cascade: true })
-  boards: Boards[];
+  @OneToMany(() => BoardEntity, (board) => board.user_id, { cascade: true })
+  boards: BoardEntity[];
 
-  @OneToMany(() => Comments, (comment) => comment.user_id, { cascade: true })
-  comments: Comments[];
+  @OneToMany(() => CommentEntity, (comment) => comment.user_id, {
+    cascade: true,
+  })
+  comments: CommentEntity[];
 
-  @OneToMany(() => Scrabs, (scrab) => scrab.user_id, { cascade: true })
-  scrabs: Scrabs[];
+  @OneToMany(() => ScrabEntity, (scrab) => scrab.user_id, { cascade: true })
+  scrabs: ScrabEntity[];
 }

@@ -7,11 +7,11 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Users } from './Users';
-import { Boards } from './Boards';
+import { UserEntity } from './Users';
+import { BoardEntity } from './Boards';
 
 @Entity({ schema: 'study-meet', name: 'comments' })
-export class Comments {
+export class CommentEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'commentId' })
   commentId: number;
 
@@ -24,11 +24,11 @@ export class Comments {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => Users, (user) => user.comments)
+  @ManyToOne(() => UserEntity, (user) => user.comments)
   @JoinColumn({ name: 'user_id' })
-  user_id: Users;
+  user_id: UserEntity;
 
-  @ManyToOne(() => Boards, (board) => board.comments)
+  @ManyToOne(() => BoardEntity, (board) => board.comments)
   @JoinColumn({ name: 'board_id' })
-  board_id: Boards;
+  board_id: BoardEntity;
 }

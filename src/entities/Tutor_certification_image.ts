@@ -6,10 +6,10 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Tutor_info } from './Tutor_info';
+import { Tutor_infoEntity } from './Tutor_info';
 
 @Entity({ schema: 'study-meet', name: 'tutor_certification_image' })
-export class Tutor_certification_image {
+export class Tutor_certification_imageEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'tutorCertificationImageId' })
   tutorCertificationImageId: number;
 
@@ -24,6 +24,6 @@ export class Tutor_certification_image {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => Tutor_info, (tutor_info) => tutor_info.tutorImages)
-  tutor_info_id: Tutor_info;
+  @ManyToOne(() => Tutor_infoEntity, (tutor_info) => tutor_info.tutorImages)
+  tutor_info_id: Tutor_infoEntity;
 }
