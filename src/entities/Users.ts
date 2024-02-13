@@ -28,13 +28,13 @@ export class UserEntity {
   @Column('varchar', { name: 'password', length: 255 })
   password: string;
 
-  @Column('int', { name: 'age' })
+  @Column('integer', { name: 'age' })
   age: number;
 
   @Column('boolean', { default: false })
   isTutor: number;
 
-  @Column('int', { default: 0 })
+  @Column('integer', { default: 0 })
   reportCount: number;
 
   @CreateDateColumn()

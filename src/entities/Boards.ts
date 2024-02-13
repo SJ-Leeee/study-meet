@@ -24,10 +24,10 @@ export class BoardEntity {
   @Column('text', { name: 'content' })
   content: string;
 
-  @Column('int', { name: 'viewCount' })
+  @Column('integer', { name: 'viewCount' })
   viewCount: number;
 
-  @Column('int', { name: 'scrabCount' })
+  @Column('integer', { name: 'scrabCount' })
   scrabCount: number;
 
   @CreateDateColumn()

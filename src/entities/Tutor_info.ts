@@ -17,7 +17,7 @@ export class Tutor_infoEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'tutorInfoId' })
   tutorInfoId: number;
 
-  @Column('int', { name: 'phoneNumber' })
+  @Column('text', { name: 'phoneNumber' })
   phoneNumber: number;
 
   @Column('text', { name: 'selfIntroduce' })
