@@ -7,10 +7,10 @@ import { UserEntity } from 'src/entities/Users';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { LocalServiceStrategy } from './stradegies/local-service.strategy';
+import { JwtServiceStrategy } from './stradegies/jwt-service.stratedy';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forFeature([UserEntity]),
     PassportModule.register({ session: false }),
     JwtModule.register({
@@ -19,7 +19,7 @@ import { LocalServiceStrategy } from './stradegies/local-service.strategy';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, LocalServiceStrategy],
+  providers: [AuthService, LocalServiceStrategy, JwtServiceStrategy],
 })
 export class AuthModule {}
 

@@ -12,7 +12,7 @@ export class LocalServiceStrategy extends PassportStrategy(
     super({
       usernameField: 'email',
       passwordField: 'password',
-      // 기본 프로퍼티를 변경
+      // HTTP 요청에서 받는 필드들
     });
   }
 

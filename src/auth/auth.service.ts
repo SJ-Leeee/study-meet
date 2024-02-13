@@ -4,12 +4,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from 'src/entities/Users';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(UserEntity)
     private userRepo: Repository<UserEntity>,
+    private jwtService: JwtService,
   ) {}
 
   // 회원가입
@@ -49,5 +51,17 @@ export class AuthService {
     const { password, ...result } = user;
 
     return result;
+  }
+
+  loginServiceUser(user: UserEntity) {
+    const payload = {
+      id: user.userId,
+      email: user.email,
+      name: user.name,
+      createAt: user.createdAt,
+    };
+    return {
+      token: this.jwtService.sign(payload),
+    };
   }
 }
