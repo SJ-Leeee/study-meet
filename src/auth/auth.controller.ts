@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { registrationUserDto } from './dto/registrationUser.dto';
+import { SignupUserDto } from './dto/signupUser.dto';
 import { LocalServiceAuthGuard } from './guards/local-service.guard';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { JwtServiceAuthGuard } from './guards/jwt-service.guard';
@@ -10,14 +10,15 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post()
-  async registrationUser(@Body() userDto: registrationUserDto) {
-    await this.authService.checkEmail(userDto.email);
+  async registrationUser(@Body() signupUserDto: SignupUserDto) {
+    return await this.authService.registrationUser(signupUserDto);
+    // await this.authService.checkEmail(userDto.email);
 
-    const hashedPassword = await this.authService.hashPassword(
-      userDto.password,
-    );
-    userDto.password = hashedPassword;
-    return await this.authService.registrationUser(userDto);
+    // const hashedPassword = await this.authService.hashPassword(
+    //   userDto.password,
+    // );
+    // userDto.password = hashedPassword;
+    // return await this.authService.registrationUser(userDto);
   }
 
   // 테스트중

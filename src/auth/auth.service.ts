@@ -1,10 +1,13 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { registrationUserDto } from './dto/registrationUser.dto';
+import { SignupUserDto } from './dto/signupUser.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from 'src/entities/Users';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { TokenPayload } from './dto/tokenPayload.dto';
+import { v4 as uuidv4 } from 'uuid';
+import { AuthRepository } from './auth.repository';
 
 @Injectable()
 export class AuthService {
@@ -12,14 +15,21 @@ export class AuthService {
     @InjectRepository(UserEntity)
     private userRepo: Repository<UserEntity>,
     private jwtService: JwtService,
+    private readonly authRepo: AuthRepository,
   ) {}
 
   // 회원가입
-  async registrationUser(userDto) {
-    const user = { ...userDto };
-    await this.userRepo.save(user);
-    const { password, ...result } = user;
-    return result;
+  async registrationUser(signupUserDto: SignupUserDto) {
+    const user = await this.authRepo.findUserByEmail(signupUserDto.email);
+    if (user) {
+      throw new HttpException(
+        `${user.email}은 이미 존재하는 이메일입니다.`,
+        HttpStatus.CONFLICT,
+      );
+    }
+    const hashedPassword = await this.hashPassword(signupUserDto.password);
+
+    return this.authRepo.signupUser(signupUserDto, hashedPassword);
   }
 
   // 동일 이메일 검증
@@ -32,7 +42,7 @@ export class AuthService {
   }
 
   // 비밀번호 암호화
-  async hashPassword(password: string) {
+  private async hashPassword(password: string) {
     return await bcrypt.hash(password, 10);
   }
 
@@ -62,6 +72,14 @@ export class AuthService {
     };
     return {
       token: this.jwtService.sign(payload),
+    };
+  }
+
+  private createTokenPayload(userId: number): TokenPayload {
+    return {
+      sub: userId,
+      iat: Math.floor(Date.now() / 1000),
+      jti: uuidv4(),
     };
   }
 }

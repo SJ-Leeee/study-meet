@@ -14,6 +14,8 @@ import { ReportEntity } from './entities/Reports';
 import { ScrabEntity } from './entities/Scrabs';
 import { Board_imageEntity } from './entities/Board_image';
 import { AuthModule } from './auth/auth.module';
+import { AccessToken } from './entities/Access_token';
+import { RefreshToken } from './entities/Refresh_token';
 
 @Module({
   imports: [
@@ -38,6 +40,8 @@ import { AuthModule } from './auth/auth.module';
         ReportEntity,
         ScrabEntity,
         Board_imageEntity,
+        AccessToken,
+        RefreshToken,
       ],
       synchronize: true,
       keepConnectionAlive: true,
