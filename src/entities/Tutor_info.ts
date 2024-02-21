@@ -23,6 +23,9 @@ export class Tutor_infoEntity {
   @Column('text', { name: 'selfIntroduce' })
   selfIntroduce: string;
 
+  @Column('bool', { name: 'apply', default: false })
+  apply: string;
+
   @CreateDateColumn()
   createdAt: Date;
 

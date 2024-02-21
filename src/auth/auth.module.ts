@@ -20,6 +20,7 @@ import { JwtServiceStrategy } from './stradegies/jwt-service.stratedy';
   ],
   controllers: [AuthController],
   providers: [AuthService, LocalServiceStrategy, JwtServiceStrategy],
+  exports: [AuthService],
 })
 export class AuthModule {}
 

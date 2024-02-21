@@ -13,6 +13,8 @@ import { ReportEntity } from './Reports';
 import { FriendEntity } from './Friends';
 import { CommentEntity } from './Comments';
 import { ScrabEntity } from './Scrabs';
+import { RefreshToken } from './Refresh_token';
+import { AccessToken } from './Access_token';
 
 @Entity({ schema: 'study-meet', name: 'users' })
 export class UserEntity {
@@ -58,6 +60,16 @@ export class UserEntity {
     cascade: true,
   })
   targetIds: FriendEntity[];
+
+  @OneToMany(() => RefreshToken, (token) => token.user_id, {
+    cascade: true,
+  })
+  refreshTokens: RefreshToken[];
+
+  @OneToMany(() => AccessToken, (token) => token.user_id, {
+    cascade: true,
+  })
+  accessTokens: AccessToken[];
 
   @OneToMany(() => ChatEntity, (chat) => chat.sender_id, { cascade: true })
   senderIds: ChatEntity[];

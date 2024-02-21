@@ -39,7 +39,7 @@ import { AuthModule } from './auth/auth.module';
         ScrabEntity,
         Board_imageEntity,
       ],
-      synchronize: false,
+      synchronize: true,
       keepConnectionAlive: true,
       logging: true,
       charset: 'utf8mb4',
