@@ -4,19 +4,19 @@ import { SignupUserDto } from './dto/signupUser.dto';
 import { LoginReqDto } from './dto/loginReq.dto';
 import { JwtServiceAuthGuard } from './guards/jwt-service.guard';
 import { UserEntity } from 'src/entities/Users';
+import { LoginResDto } from './dto/loginRes.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post()
+  @Post('/signup')
   async signupUser(@Body() signupUserDto: SignupUserDto): Promise<any> {
     return await this.authService.signupUser(signupUserDto);
   }
 
-  // 테스트중
   @Post('/login')
-  async login(@Body() loginDto: LoginReqDto): Promise<any> {
+  async login(@Body() loginDto: LoginReqDto): Promise<LoginResDto> {
     return await this.authService.loginServiceUser(loginDto);
   }
 

@@ -23,6 +23,6 @@ export class RefreshTokenRepository {
     refreshToken.jti = jti;
     refreshToken.expiresAt = expiresAt;
 
-    this.accessTokenRepo.save(refreshToken);
+    return this.accessTokenRepo.save(refreshToken);
   }
 }

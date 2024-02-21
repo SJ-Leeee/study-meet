@@ -23,6 +23,6 @@ export class AccessTokenRepository {
     accessToken.jti = jti;
     accessToken.expiresAt = expiresAt;
 
-    this.accessTokenRepo.save(accessToken);
+    return this.accessTokenRepo.save(accessToken);
   }
 }

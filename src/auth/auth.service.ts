@@ -10,6 +10,7 @@ import { LoginReqDto } from './dto/loginReq.dto';
 import { LoginResDto } from './dto/loginRes.dto';
 import { ConfigService } from '@nestjs/config';
 import { AccessTokenRepository } from './repositories/accessToken.repository';
+import { RefreshTokenRepository } from './repositories/refreshToken.repository';
 
 @Injectable()
 export class AuthService {
@@ -18,6 +19,7 @@ export class AuthService {
     private readonly userRepo: UserRepository,
     private configService: ConfigService,
     private readonly accessTokenRepo: AccessTokenRepository,
+    private readonly refreshTokenRepo: RefreshTokenRepository,
   ) {}
 
   // 회원가입
@@ -89,7 +91,7 @@ export class AuthService {
     const refreshToken = this.jwtService.sign(payload, { expiresIn });
     const expiresAt = this.calculateExpiry(expiresIn);
 
-    await this.accessTokenRepo.saveAccessToken(
+    await this.refreshTokenRepo.saveRefreshToken(
       user,
       refreshToken,
       payload.jti,

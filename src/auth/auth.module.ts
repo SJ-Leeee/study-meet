@@ -6,13 +6,21 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from 'src/entities/Users';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { LocalServiceStrategy } from './stradegies/local-service.strategy';
-import { JwtServiceStrategy } from './stradegies/jwt-service.stratedy';
+// import { LocalServiceStrategy } from './stradegies/local-service.strategy';
+// import { JwtServiceStrategy } from './stradegies/jwt-service.stratedy';
 import { UserRepository } from './repositories/user.repository';
+import { RefreshTokenRepository } from './repositories/refreshToken.repository';
+import { AccessTokenRepository } from './repositories/accessToken.repository';
+import { RefreshTokenEntity } from 'src/entities/Refresh_token';
+import { AccessTokenEntity } from 'src/entities/Access_token';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UserEntity]),
+    TypeOrmModule.forFeature([
+      UserEntity,
+      RefreshTokenEntity,
+      AccessTokenEntity,
+    ]),
     PassportModule.register({ session: false }),
     JwtModule.register({
       secret: process.env.JWT_SECRET_KEY, // JWT Signature의 Secret 값 입력
@@ -22,9 +30,12 @@ import { UserRepository } from './repositories/user.repository';
   controllers: [AuthController],
   providers: [
     AuthService,
-    LocalServiceStrategy,
-    JwtServiceStrategy,
+    // LocalServiceStrategy,
+    // JwtServiceStrategy,
+
     UserRepository,
+    RefreshTokenRepository,
+    AccessTokenRepository,
   ],
   exports: [AuthService],
 })

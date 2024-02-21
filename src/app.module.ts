@@ -43,7 +43,7 @@ import { RefreshTokenEntity } from './entities/Refresh_token';
         AccessTokenEntity,
         RefreshTokenEntity,
       ],
-      synchronize: true,
+      synchronize: false,
       keepConnectionAlive: true,
       logging: true,
       charset: 'utf8mb4',
