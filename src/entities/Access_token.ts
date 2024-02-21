@@ -11,7 +11,7 @@ import {
 import { UserEntity } from './Users';
 
 @Entity()
-export class AccessToken {
+export class AccessTokenEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'accessTokenId' })
   accessTokenId: number;
 

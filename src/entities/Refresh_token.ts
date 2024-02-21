@@ -11,7 +11,7 @@ import {
 import { UserEntity } from './Users';
 
 @Entity()
-export class RefreshToken {
+export class RefreshTokenEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'refreshTokenId' })
   refreshTokenId: number;
 

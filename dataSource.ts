@@ -9,8 +9,8 @@ import { ScrabEntity } from './src/entities/Scrabs';
 import { Tutor_certification_imageEntity } from './src/entities/Tutor_certification_image';
 import { Tutor_infoEntity } from './src/entities/Tutor_info';
 import { UserEntity } from './src/entities/Users';
-import { AccessToken } from 'src/entities/Access_token';
-import { RefreshToken } from 'src/entities/Refresh_token';
+import { AccessTokenEntity } from 'src/entities/Access_token';
+import { RefreshTokenEntity } from 'src/entities/Refresh_token';
 
 require('dotenv').config();
 
@@ -32,8 +32,8 @@ const dataSource = new DataSource({
     FriendEntity,
     ReportEntity,
     ScrabEntity,
-    AccessToken,
-    RefreshToken,
+    AccessTokenEntity,
+    RefreshTokenEntity,
   ],
   migrations: [__dirname + '/src/migrations/*.ts'],
   charset: 'utf8mb4_general_ci',
