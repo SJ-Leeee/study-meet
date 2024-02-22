@@ -7,7 +7,6 @@ import { TokenPayload } from './dto/tokenPayload.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { UserRepository } from './repositories/user.repository';
 import { LoginReqDto } from './dto/loginReq.dto';
-import { LoginResDto } from './dto/loginRes.dto';
 import { ConfigService } from '@nestjs/config';
 import { AccessTokenRepository } from './repositories/accessToken.repository';
 import { RefreshTokenRepository } from './repositories/refreshToken.repository';
@@ -42,7 +41,7 @@ export class AuthService {
   }
 
   // 로그인
-  async loginServiceUser(dto: LoginReqDto): Promise<LoginResDto> {
+  async loginServiceUser(dto: LoginReqDto): Promise<any> {
     const user = await this.loginValidateUser(dto.email, dto.password);
     const payload = this.createTokenPayload(user.userId);
 
