@@ -46,6 +46,3 @@ import { JwtRefreshStrategy } from './stradegies/jwt-refresh-strategy';
   ],
 })
 export class AuthModule {}
-
-// session:false로 둔 이유는 토큰기반인증을 사용할 것이기 때문이다.
-// JwtModule.registerAsync({}) 도 있다. 이것은 db와 접근할 경우, 비동기로 환경변수를 가져올 경우 유용하다.

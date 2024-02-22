@@ -1,10 +1,11 @@
-import { NestApplicationOptions } from '@nestjs/common';
+import { HttpStatus, NestApplicationOptions } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
   utilities as nestWinstonModuleUtilities,
   WinstonModule,
 } from 'nest-winston';
-import winston from 'winston';
+import * as winston from 'winston';
+import { BusinessException } from './exception/businessException';
 
 export function getNestOptions(): NestApplicationOptions {
   const configService = new ConfigService();
@@ -32,4 +33,14 @@ export function getNestOptions(): NestApplicationOptions {
       ],
     }),
   };
+}
+
+export function ValidationPipeOption(errors) {
+  const errProperty = errors.map((error) => error.property).join(', ');
+  throw new BusinessException(
+    'pipe',
+    `데이터 형식 오류`,
+    `${errProperty} pipe false`,
+    HttpStatus.BAD_REQUEST,
+  );
 }

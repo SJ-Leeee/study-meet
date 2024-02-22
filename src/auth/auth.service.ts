@@ -10,6 +10,7 @@ import { LoginReqDto } from './dto/loginReq.dto';
 import { ConfigService } from '@nestjs/config';
 import { AccessTokenRepository } from './repositories/accessToken.repository';
 import { RefreshTokenRepository } from './repositories/refreshToken.repository';
+import { BusinessException } from 'src/exception/businessException';
 
 @Injectable()
 export class AuthService {
@@ -62,7 +63,12 @@ export class AuthService {
   ): Promise<UserEntity> {
     const user = await this.userRepo.findUserByEmail(email);
     if (!user || !(await bcrypt.compare(getPassword, user.password))) {
-      throw new HttpException('로그인 실패', HttpStatus.NOT_FOUND);
+      throw new BusinessException(
+        'auth',
+        '로그인이 실패했어요',
+        '로그인 실패',
+        HttpStatus.FORBIDDEN,
+      );
     }
 
     return user;
