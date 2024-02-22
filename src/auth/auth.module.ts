@@ -5,7 +5,6 @@ import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from 'src/entities/Users';
 import { JwtModule } from '@nestjs/jwt';
-import { PassportModule } from '@nestjs/passport';
 import { UserRepository } from './repositories/user.repository';
 import { RefreshTokenRepository } from './repositories/refreshToken.repository';
 import { AccessTokenRepository } from './repositories/accessToken.repository';
@@ -21,7 +20,6 @@ import { JwtRefreshStrategy } from './stradegies/jwt-refresh-strategy';
       RefreshTokenEntity,
       AccessTokenEntity,
     ]),
-    // PassportModule.register({ session: false }),
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
@@ -38,7 +36,14 @@ import { JwtRefreshStrategy } from './stradegies/jwt-refresh-strategy';
     RefreshTokenRepository,
     AccessTokenRepository,
   ],
-  exports: [AuthService],
+  exports: [
+    AuthService,
+    JwtServiceStrategy,
+    JwtRefreshStrategy,
+    UserRepository,
+    RefreshTokenRepository,
+    AccessTokenRepository,
+  ],
 })
 export class AuthModule {}
 
