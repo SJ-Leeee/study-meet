@@ -26,8 +26,10 @@ export class AuthService {
   async signupUser(signupUserDto: SignupUserDto) {
     const user = await this.userRepo.findUserByEmail(signupUserDto.email);
     if (user) {
-      throw new HttpException(
-        `${user.email}은 이미 존재하는 이메일입니다.`,
+      throw new BusinessException(
+        'auth',
+        `${user.email}은 이미 사용중입니다.`,
+        `${user.email} is exist`,
         HttpStatus.CONFLICT,
       );
     }
@@ -65,8 +67,8 @@ export class AuthService {
     if (!user || !(await bcrypt.compare(getPassword, user.password))) {
       throw new BusinessException(
         'auth',
-        '로그인이 실패했어요',
-        '로그인 실패',
+        'email, password is incorrect',
+        'email, password is incorrect',
         HttpStatus.FORBIDDEN,
       );
     }

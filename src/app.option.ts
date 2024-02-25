@@ -39,7 +39,7 @@ export function ValidationPipeOption(errors) {
   const errProperty = errors.map((error) => error.property).join(', ');
   throw new BusinessException(
     'pipe',
-    `데이터 형식 오류`,
+    `${errProperty} pipe false`,
     `${errProperty} pipe false`,
     HttpStatus.BAD_REQUEST,
   );
