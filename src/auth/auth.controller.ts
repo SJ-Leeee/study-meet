@@ -10,7 +10,7 @@ import {
 import { AuthService } from './auth.service';
 import { SignupUserDto } from './dto/signupUser.dto';
 import { LoginReqDto } from './dto/loginReq.dto';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import { JwtServiceAuthGuard } from './guards/jwt-service.guard';
 import { GetAccessWithRefreshGuard } from './guards/get-access-with-refresh.guard';
 
@@ -43,22 +43,21 @@ export class AuthController {
 
   // 리프레쉬토큰
   @UseGuards(GetAccessWithRefreshGuard)
-  @Post()
-  async accessWithRefresh() {}
+  @Post('/refresh')
+  async accessWithRefresh(@Req() req, @Res() res: Response) {
+    const accessToken = await this.authService.accessWithRefresh(
+      req.user.userId,
+    );
+
+    res.header('Authorization', `Bearer ${accessToken}`);
+    res.json({ message: '액세스토큰발급' });
+  }
 
   // 액세스토큰가드 테스트
   @UseGuards(JwtServiceAuthGuard)
   @Get()
   async getProfile(@Req() req) {
-    console.log(req.user);
+    // console.log(req.user);
     // return req;
-  }
-
-  // 리프레시토큰가드 테스트
-  @UseGuards(GetAccessWithRefreshGuard)
-  @Get('/refresh')
-  async accessTokenWithRefresh(@Req() req) {
-    console.log(req.cookies['refreshToken']);
-    return req;
   }
 }

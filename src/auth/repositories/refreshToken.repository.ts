@@ -18,7 +18,7 @@ export class RefreshTokenRepository {
     expiresAt: Date,
   ) {
     const refreshToken = new RefreshTokenEntity();
-    refreshToken.user_id = user;
+    refreshToken.user = user;
     refreshToken.token = token;
     refreshToken.jti = jti;
     refreshToken.expiresAt = expiresAt;
@@ -27,6 +27,11 @@ export class RefreshTokenRepository {
   }
 
   async getRefreshWithJti(jti: string): Promise<RefreshTokenEntity> {
-    return await this.refreshRepo.findOne({ where: { jti } });
+    return await this.refreshRepo
+      .createQueryBuilder('refresh')
+      .select(['refresh.available', 'user.userId'])
+      .leftJoin('refresh.user', 'user')
+      .where('refresh.jti = :jti', { jti })
+      .getOne();
   }
 }

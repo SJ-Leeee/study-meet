@@ -15,6 +15,13 @@ export class UserRepository {
     return await this.userRepo.findOne({ where: { email } });
   }
 
+  async findUserById(userId: number): Promise<UserEntity> {
+    return await this.userRepo
+      .createQueryBuilder('user')
+      .where('user.userId = :userId', { userId })
+      .getOne();
+  }
+
   signupUser(dto: SignupUserDto, hashedPassword: string) {
     const user = new UserEntity();
     user.name = dto.name;

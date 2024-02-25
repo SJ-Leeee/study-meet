@@ -139,4 +139,13 @@ export class AuthService {
 
     return new Date(Date.now() + expiresInMilliseconds);
   }
+
+  // 리프레시로 액세스발급
+  async accessWithRefresh(userId: number): Promise<string> {
+    const user = await this.userRepo.findUserById(userId);
+    const payload = this.createTokenPayload(userId);
+
+    const accessToken = await this.createAccessToken(user, payload);
+    return accessToken;
+  }
 }
