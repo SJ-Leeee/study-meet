@@ -25,4 +25,8 @@ export class AccessTokenRepository {
 
     return this.accessTokenRepo.save(accessToken);
   }
+
+  async getAccessWithJti(jti: string): Promise<AccessTokenEntity> {
+    return await this.accessTokenRepo.findOne({ where: { jti } });
+  }
 }

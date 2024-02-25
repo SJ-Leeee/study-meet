@@ -18,11 +18,13 @@ import { GetAccessWithRefreshGuard } from './guards/get-access-with-refresh.guar
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  // 회원가입
   @Post('/signup')
   async signupUser(@Body() signupUserDto: SignupUserDto): Promise<any> {
     return await this.authService.signupUser(signupUserDto);
   }
 
+  // 로그인
   @Post('/login')
   async login(@Res() res: Response, @Body() loginDto: LoginReqDto) {
     const { accessToken, refreshToken } =
@@ -33,13 +35,23 @@ export class AuthController {
     res.json({ message: '토큰 정상발급' });
   }
 
-  // 테스트 내정보조회
+  // 로그아웃
+  @Post('/logout')
+  async logout() {}
+
+  // 리프레쉬토큰
+  @UseGuards(GetAccessWithRefreshGuard)
+  @Post()
+  async accessWithRefresh() {}
+
+  // 액세스토큰가드 테스트
   @UseGuards(JwtServiceAuthGuard)
   @Get()
   async getProfile(@Req() req) {
     return req.user;
   }
 
+  // 리프레시토큰가드 테스트
   @UseGuards(GetAccessWithRefreshGuard)
   @Get('/refresh')
   async accessTokenWithRefresh(@Req() req) {

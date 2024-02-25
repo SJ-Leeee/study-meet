@@ -8,7 +8,7 @@ import { Repository } from 'typeorm';
 export class RefreshTokenRepository {
   constructor(
     @InjectRepository(RefreshTokenEntity)
-    private readonly accessTokenRepo: Repository<RefreshTokenEntity>,
+    private readonly refreshRepo: Repository<RefreshTokenEntity>,
   ) {}
 
   async saveRefreshToken(
@@ -23,6 +23,10 @@ export class RefreshTokenRepository {
     refreshToken.jti = jti;
     refreshToken.expiresAt = expiresAt;
 
-    return this.accessTokenRepo.save(refreshToken);
+    return this.refreshRepo.save(refreshToken);
+  }
+
+  async getRefreshWithJti(jti: string): Promise<RefreshTokenEntity> {
+    return await this.refreshRepo.findOne({ where: { jti } });
   }
 }
