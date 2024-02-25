@@ -10,7 +10,7 @@ import {
 import { UserEntity } from './Users';
 import { BoardEntity } from './Boards';
 
-@Entity({ schema: 'study-meet', name: 'comments' })
+@Entity({ schema: 'study_meet', name: 'comments' })
 export class CommentEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'commentId' })
   commentId: number;

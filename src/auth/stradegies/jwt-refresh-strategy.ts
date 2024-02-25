@@ -33,6 +33,6 @@ export class JwtRefreshStrategy extends PassportStrategy(
       );
     }
     console.log(token);
-    return token.user_id;
+    return token.user;
   }
 }

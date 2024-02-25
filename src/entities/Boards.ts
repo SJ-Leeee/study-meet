@@ -13,7 +13,7 @@ import { Board_imageEntity } from './Board_image';
 import { CommentEntity } from './Comments';
 import { ScrabEntity } from './Scrabs';
 
-@Entity({ schema: 'study-meet', name: 'boards' })
+@Entity({ schema: 'study_meet', name: 'boards' })
 export class BoardEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'boardId' })
   boardId: number;

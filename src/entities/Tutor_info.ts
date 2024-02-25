@@ -12,7 +12,7 @@ import {
 import { UserEntity } from './Users';
 import { Tutor_certification_imageEntity } from './Tutor_certification_image';
 
-@Entity({ schema: 'study-meet', name: 'tutor_info' })
+@Entity({ schema: 'study_meet', name: 'tutor_info' })
 export class Tutor_infoEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'tutorInfoId' })
   tutorInfoId: number;

@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { BoardEntity } from './Boards';
 
-@Entity({ schema: 'study-meet', name: 'board_image' })
+@Entity({ schema: 'study_meet', name: 'board_image' })
 export class Board_imageEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'boardImageId' })
   boardImageId: number;

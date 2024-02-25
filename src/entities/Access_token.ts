@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import { UserEntity } from './Users';
 
-@Entity()
+@Entity({ schema: 'study_meet', name: 'accessTokens' })
 export class AccessTokenEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'accessTokenId' })
   accessTokenId: number;

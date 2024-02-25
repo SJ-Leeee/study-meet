@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { UserEntity } from './Users';
 
-@Entity({ schema: 'study-meet', name: 'friends' })
+@Entity({ schema: 'study_meet', name: 'friends' })
 export class FriendEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'friendId' })
   friendId: number;

@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { UserEntity } from './Users';
 
-@Entity({ schema: 'study-meet', name: 'chats' })
+@Entity({ schema: 'study_meet', name: 'chats' })
 export class ChatEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'chatId' })
   chatId: number;

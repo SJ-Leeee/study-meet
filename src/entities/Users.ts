@@ -16,7 +16,7 @@ import { ScrabEntity } from './Scrabs';
 import { RefreshTokenEntity } from './Refresh_token';
 import { AccessTokenEntity } from './Access_token';
 
-@Entity({ schema: 'study-meet', name: 'users' })
+@Entity({ schema: 'study_meet', name: 'users' })
 export class UserEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'userId' })
   userId: number;

@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { Tutor_infoEntity } from './Tutor_info';
 
-@Entity({ schema: 'study-meet', name: 'tutor_certification_image' })
+@Entity({ schema: 'study_meet', name: 'tutor_certification_image' })
 export class Tutor_certification_imageEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'tutorCertificationImageId' })
   tutorCertificationImageId: number;

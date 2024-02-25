@@ -10,7 +10,7 @@ import {
 import { UserEntity } from './Users';
 import { BoardEntity } from './Boards';
 
-@Entity({ schema: 'study-meet', name: 'scrabs' })
+@Entity({ schema: 'study_meet', name: 'scrabs' })
 export class ScrabEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'scrabId' })
   scrabId: number;
