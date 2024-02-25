@@ -25,5 +25,5 @@ export class Tutor_certification_imageEntity {
   updatedAt: Date;
 
   @ManyToOne(() => Tutor_infoEntity, (tutor_info) => tutor_info.tutorImages)
-  tutor_info_id: Tutor_infoEntity;
+  tutorInfo: Tutor_infoEntity;
 }

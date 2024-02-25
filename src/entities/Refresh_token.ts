@@ -5,7 +5,6 @@ import {
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
-  Relation,
   UpdateDateColumn,
 } from 'typeorm';
 import { UserEntity } from './Users';
@@ -21,7 +20,7 @@ export class RefreshTokenEntity {
   @Column('text')
   token: string;
 
-  @Column()
+  @Column({ default: true })
   available: boolean;
 
   @Column({ type: 'timestamp' })
@@ -34,6 +33,6 @@ export class RefreshTokenEntity {
   updatedAt: Date;
 
   @ManyToOne(() => UserEntity, (user) => user.refreshTokens)
-  @JoinColumn({ name: 'user_id' })
-  user_id: UserEntity;
+  @JoinColumn({ name: 'user' })
+  user: UserEntity;
 }

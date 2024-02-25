@@ -18,7 +18,7 @@ export class AccessTokenRepository {
     expiresAt: Date,
   ) {
     const accessToken = new AccessTokenEntity();
-    accessToken.user_id = user;
+    accessToken.user = user;
     accessToken.token = token;
     accessToken.jti = jti;
     accessToken.expiresAt = expiresAt;
@@ -27,6 +27,11 @@ export class AccessTokenRepository {
   }
 
   async getAccessWithJti(jti: string): Promise<AccessTokenEntity> {
-    return await this.accessTokenRepo.findOne({ where: { jti } });
+    return await this.accessTokenRepo
+      .createQueryBuilder('accessToken')
+      .select(['accessToken.available', 'user.userId']) // accessToken만 선택
+      .leftJoin('accessToken.user_id', 'user')
+      .where('accessToken.jti = :jti', { jti })
+      .getOne();
   }
 }

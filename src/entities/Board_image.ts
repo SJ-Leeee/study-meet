@@ -27,6 +27,6 @@ export class Board_imageEntity {
   updatedAt: Date;
 
   @ManyToOne(() => BoardEntity, (board) => board.boardImages)
-  @JoinColumn({ name: 'board_id' })
-  board_id: BoardEntity;
+  @JoinColumn({ name: 'board' })
+  board: BoardEntity;
 }

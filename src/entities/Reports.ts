@@ -26,11 +26,11 @@ export class ReportEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.reportUserIds)
+  @ManyToOne(() => UserEntity, (user) => user.reportUsers)
   @JoinColumn({ name: 'user_id' })
-  user_id: UserEntity;
+  user: UserEntity;
 
-  @ManyToOne(() => UserEntity, (user) => user.reportedUserIds)
+  @ManyToOne(() => UserEntity, (user) => user.reportedUsers)
   @JoinColumn({ name: 'reported_user_id' })
-  reported_user_id: UserEntity;
+  reportedUser: UserEntity;
 }

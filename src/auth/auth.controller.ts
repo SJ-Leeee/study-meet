@@ -37,7 +37,9 @@ export class AuthController {
 
   // 로그아웃
   @Post('/logout')
-  async logout() {}
+  async logout(@Req() req: Request) {
+    console.log(req);
+  }
 
   // 리프레쉬토큰
   @UseGuards(GetAccessWithRefreshGuard)
@@ -48,7 +50,8 @@ export class AuthController {
   @UseGuards(JwtServiceAuthGuard)
   @Get()
   async getProfile(@Req() req) {
-    return req.user;
+    console.log(req.user);
+    // return req;
   }
 
   // 리프레시토큰가드 테스트
@@ -56,6 +59,6 @@ export class AuthController {
   @Get('/refresh')
   async accessTokenWithRefresh(@Req() req) {
     console.log(req.cookies['refreshToken']);
-    return req.user;
+    return req;
   }
 }

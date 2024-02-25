@@ -23,11 +23,11 @@ export class ChatEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.senderIds)
-  @JoinColumn({ name: 'sender_id' })
-  sender_id: UserEntity;
+  @ManyToOne(() => UserEntity, (user) => user.senders)
+  @JoinColumn({ name: 'sender' })
+  sender: UserEntity;
 
-  @ManyToOne(() => UserEntity, (user) => user.receiverIds)
-  @JoinColumn({ name: 'reciever_id' })
-  reciever_id: UserEntity;
+  @ManyToOne(() => UserEntity, (user) => user.receivers)
+  @JoinColumn({ name: 'reciever' })
+  reciever: UserEntity;
 }

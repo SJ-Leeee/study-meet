@@ -33,12 +33,12 @@ export class Tutor_infoEntity {
   updatedAt: Date;
 
   @OneToOne(() => UserEntity, { nullable: false })
-  @JoinColumn({ name: 'user_id' })
-  user_id: UserEntity;
+  @JoinColumn({ name: 'user' })
+  user: UserEntity;
 
   @OneToMany(
     () => Tutor_certification_imageEntity,
-    (tutorImage) => tutorImage.tutor_info_id,
+    (tutorImage) => tutorImage.tutorInfo,
     {
       cascade: true,
     },

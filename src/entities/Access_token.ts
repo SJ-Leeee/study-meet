@@ -21,7 +21,7 @@ export class AccessTokenEntity {
   @Column('text')
   token: string;
 
-  @Column()
+  @Column({ default: true })
   available: boolean;
 
   @Column({ type: 'timestamp' })
@@ -34,6 +34,6 @@ export class AccessTokenEntity {
   updatedAt: Date;
 
   @ManyToOne(() => UserEntity, (user) => user.accessTokens)
-  @JoinColumn({ name: 'user_id' })
-  user_id: UserEntity;
+  @JoinColumn({ name: 'user' })
+  user: UserEntity;
 }

@@ -37,19 +37,19 @@ export class BoardEntity {
   updatedAt: Date;
 
   @ManyToOne(() => UserEntity, (user) => user.boards)
-  @JoinColumn({ name: 'user_id' })
-  user_id: UserEntity;
+  @JoinColumn({ name: 'user' })
+  user: UserEntity;
 
-  @OneToMany(() => Board_imageEntity, (image) => image.board_id, {
+  @OneToMany(() => Board_imageEntity, (image) => image.board, {
     cascade: true,
   })
   boardImages: Board_imageEntity[];
 
-  @OneToMany(() => CommentEntity, (comment) => comment.board_id, {
+  @OneToMany(() => CommentEntity, (comment) => comment.board, {
     cascade: true,
   })
   comments: CommentEntity[];
 
-  @OneToMany(() => ScrabEntity, (scrab) => scrab.board_id, { cascade: true })
+  @OneToMany(() => ScrabEntity, (scrab) => scrab.board, { cascade: true })
   scrabs: ScrabEntity[];
 }

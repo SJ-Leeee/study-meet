@@ -19,11 +19,11 @@ export class FriendEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.myIds)
-  @JoinColumn({ name: 'my_id' })
-  my_id: UserEntity;
+  @ManyToOne(() => UserEntity, (user) => user.friendUsers)
+  @JoinColumn({ name: 'user' })
+  user: UserEntity;
 
-  @ManyToOne(() => UserEntity, (user) => user.targetIds)
-  @JoinColumn({ name: 'target_id' })
-  target_id: UserEntity;
+  @ManyToOne(() => UserEntity, (user) => user.friendedUsers)
+  @JoinColumn({ name: 'targetUser' })
+  targetUser: UserEntity;
 }

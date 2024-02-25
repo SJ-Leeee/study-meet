@@ -2,8 +2,8 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-jwt';
-import { AccessTokenRepository } from '../repositories/accessToken.repository';
 import { BusinessException } from 'src/exception/businessException';
+import { RefreshTokenRepository } from '../repositories/refreshToken.repository';
 
 @Injectable()
 export class JwtRefreshStrategy extends PassportStrategy(
@@ -12,7 +12,7 @@ export class JwtRefreshStrategy extends PassportStrategy(
 ) {
   constructor(
     readonly configService: ConfigService,
-    private readonly accessRepo: AccessTokenRepository,
+    private readonly refreshRepo: RefreshTokenRepository,
   ) {
     super({
       secretOrKey: configService.get<string>('JWT_SECRET_KEY'),
@@ -23,7 +23,7 @@ export class JwtRefreshStrategy extends PassportStrategy(
     });
   }
   async validate(payload: any) {
-    const token = await this.accessRepo.getAccessWithJti(payload.jti);
+    const token = await this.refreshRepo.getRefreshWithJti(payload.jti);
     if (!token.available || !token) {
       throw new BusinessException(
         'token',
@@ -32,6 +32,7 @@ export class JwtRefreshStrategy extends PassportStrategy(
         HttpStatus.BAD_REQUEST,
       );
     }
+    console.log(token);
     return token.user_id;
   }
 }
