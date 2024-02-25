@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { ConfigService } from '@nestjs/config';
@@ -12,6 +12,7 @@ import { RefreshTokenEntity } from 'src/entities/Refresh_token';
 import { AccessTokenEntity } from 'src/entities/Access_token';
 import { JwtServiceStrategy } from './stradegies/jwt-service.stratedy';
 import { JwtRefreshStrategy } from './stradegies/jwt-refresh-strategy';
+import { GetJtiMiddleware } from './middlewares/getJti.middleware';
 
 @Module({
   imports: [
@@ -45,4 +46,8 @@ import { JwtRefreshStrategy } from './stradegies/jwt-refresh-strategy';
     AccessTokenRepository,
   ],
 })
-export class AuthModule {}
+export class AuthModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(GetJtiMiddleware).forRoutes('auth/logout');
+  }
+}

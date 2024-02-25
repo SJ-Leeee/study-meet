@@ -35,13 +35,13 @@ export class AuthController {
     res.json({ message: '토큰 정상발급' });
   }
 
-  // 로그아웃
+  //로그아웃
   @Post('/logout')
-  async logout(@Req() req: Request) {
-    console.log(req);
+  async logout(@Req() req): Promise<void> {
+    await this.authService.logout(req.accessToken, req.refreshToken);
   }
 
-  // 리프레쉬토큰
+  // 액세스토큰 재발급
   @UseGuards(GetAccessWithRefreshGuard)
   @Post('/refresh')
   async accessWithRefresh(@Req() req, @Res() res: Response) {
@@ -53,11 +53,9 @@ export class AuthController {
     res.json({ message: '액세스토큰발급' });
   }
 
-  // 액세스토큰가드 테스트
+  @Post('test')
   @UseGuards(JwtServiceAuthGuard)
-  @Get()
-  async getProfile(@Req() req) {
-    // console.log(req.user);
-    // return req;
+  async test() {
+    return '응';
   }
 }

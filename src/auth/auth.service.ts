@@ -148,4 +148,28 @@ export class AuthService {
     const accessToken = await this.createAccessToken(user, payload);
     return accessToken;
   }
+
+  // 로그아웃
+  async logout(accessToken: string, refreshToken: string): Promise<void> {
+    const [jtiAccess, jtiRefresh] = await Promise.all([
+      this.jwtService.verifyAsync(accessToken, {
+        secret: this.configService.get<string>('JWT_SECRET_KEY'),
+      }),
+      this.jwtService.verifyAsync(refreshToken, {
+        secret: this.configService.get<string>('JWT_SECRET_KEY'),
+      }),
+    ]);
+
+    await this.tokenBlackList(jtiAccess.jti, jtiRefresh.jti);
+  }
+
+  private async tokenBlackList(
+    accessJti: string,
+    refreshJti: string,
+  ): Promise<void> {
+    Promise.all([
+      this.accessTokenRepo.blacklist(accessJti),
+      this.refreshTokenRepo.blacklist(refreshJti),
+    ]);
+  }
 }

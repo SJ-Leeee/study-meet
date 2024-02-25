@@ -34,4 +34,13 @@ export class RefreshTokenRepository {
       .where('refresh.jti = :jti', { jti })
       .getOne();
   }
+
+  async blacklist(jti: string): Promise<void> {
+    await this.refreshRepo
+      .createQueryBuilder()
+      .update(RefreshTokenEntity)
+      .set({ available: false })
+      .where('jti = :jti', { jti })
+      .execute();
+  }
 }

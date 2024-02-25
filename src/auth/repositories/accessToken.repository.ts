@@ -34,4 +34,13 @@ export class AccessTokenRepository {
       .where('accessToken.jti = :jti', { jti })
       .getOne();
   }
+
+  async blacklist(jti: string): Promise<void> {
+    await this.accessTokenRepo
+      .createQueryBuilder()
+      .update(AccessTokenEntity)
+      .set({ available: false })
+      .where('jti = :jti', { jti })
+      .execute();
+  }
 }
