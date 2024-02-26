@@ -29,19 +29,18 @@ export class UserController {
     return await this.userService.getUserById(+userId);
   }
 
-  @UseGuards(AdminAuthGuard)
+  // @UseGuards(AdminAuthGuard)
   @Put('/:userId/role')
   async editUserRole(
     @Param('userId') userId: string,
     @Body() role: EditRoleDto,
-  ): Promise<any> {
-    console.log(role);
-    return await this.userService.editUserRole(+userId, role);
+  ): Promise<void> {
+    await this.userService.editUserRole(+userId, role);
   }
 
-  // @Delete('/:userId')
-  // async deleteUser(@Param('userId') userId: string) {}
-  // 관리자가 role설정하기
-  // 관리자가 유저 삭제하기
-  // 관리자가 유저 조회하기
+  @UseGuards(AdminAuthGuard)
+  @Delete('/:userId')
+  async deleteUser(@Param('userId') userId: string): Promise<void> {
+    return await this.userService.deleteUser(+userId);
+  }
 }

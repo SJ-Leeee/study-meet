@@ -44,17 +44,26 @@ export class UserRepository {
   async getAllUsers(): Promise<UserEntity[]> {
     return await this.userRepo
       .createQueryBuilder('user')
-      .select(['user.userId', 'user.name', 'user.userRole'])
+      .select(['user.userId', 'user.name', 'user.email', 'user.userRole'])
       .getMany();
   }
 
   async updateUser(userId: number, roleDto: EditRoleDto): Promise<any> {
-    return await this.userRepo
+    await this.userRepo
       .createQueryBuilder()
       .update(UserEntity)
       .set({
         userRole: roleDto.role,
       })
+      .where('userId = :userId', { userId })
+      .execute();
+  }
+
+  async deleteUser(userId: number): Promise<void> {
+    await this.userRepo
+      .createQueryBuilder()
+      .delete()
+      .from(UserEntity)
       .where('userId = :userId', { userId })
       .execute();
   }

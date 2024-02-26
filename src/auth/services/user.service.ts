@@ -26,7 +26,7 @@ export class UserService {
     return result;
   }
 
-  async editUserRole(userId: number, role: EditRoleDto): Promise<any> {
+  async editUserRole(userId: number, role: EditRoleDto): Promise<void> {
     const user = await this.userRepo.findUserById(userId);
     if (!user) {
       throw new BusinessException(
@@ -36,6 +36,20 @@ export class UserService {
         HttpStatus.NOT_FOUND,
       );
     }
-    return await this.userRepo.updateUser(userId, role);
+    await this.userRepo.updateUser(userId, role);
+  }
+
+  async deleteUser(userId: number): Promise<void> {
+    const user = await this.userRepo.findUserById(userId);
+    if (!user) {
+      throw new BusinessException(
+        'user',
+        'user is not exist',
+        'user is not exist',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return await this.userRepo.deleteUser(userId);
   }
 }
