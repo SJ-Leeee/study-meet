@@ -1,6 +1,17 @@
-import { Controller, Delete, Get, Param, Patch } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { UserService } from '../services/user.service';
-import { UserEntity } from 'src/entities/Users';
+import { UserEntity, UserRole } from 'src/entities/Users';
+import { AdminAuthGuard } from '../guards/adminAuth.guard';
+import { EditRoleDto } from '../dto/editRole.dto';
 
 @Controller('user')
 export class UserController {
@@ -18,8 +29,15 @@ export class UserController {
     return await this.userService.getUserById(+userId);
   }
 
-  // @Patch('role/:userId')
-  // async editUserRole() {}
+  @UseGuards(AdminAuthGuard)
+  @Put('/:userId/role')
+  async editUserRole(
+    @Param('userId') userId: string,
+    @Body() role: EditRoleDto,
+  ): Promise<any> {
+    console.log(role);
+    return await this.userService.editUserRole(+userId, role);
+  }
 
   // @Delete('/:userId')
   // async deleteUser(@Param('userId') userId: string) {}

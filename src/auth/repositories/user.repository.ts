@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from 'src/entities/Users';
+import { UserEntity, UserRole } from 'src/entities/Users';
 import { Repository } from 'typeorm';
 import { SignupUserDto } from '../dto/signupUser.dto';
+import { EditRoleDto } from '../dto/editRole.dto';
 
 @Injectable()
 export class UserRepository {
@@ -45,5 +46,16 @@ export class UserRepository {
       .createQueryBuilder('user')
       .select(['user.userId', 'user.name', 'user.userRole'])
       .getMany();
+  }
+
+  async updateUser(userId: number, roleDto: EditRoleDto): Promise<any> {
+    return await this.userRepo
+      .createQueryBuilder()
+      .update(UserEntity)
+      .set({
+        userRole: roleDto.role,
+      })
+      .where('userId = :userId', { userId })
+      .execute();
   }
 }

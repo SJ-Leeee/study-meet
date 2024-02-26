@@ -36,11 +36,6 @@ export function getNestOptions(): NestApplicationOptions {
 }
 
 export function ValidationPipeOption(errors) {
-  const errProperty = errors.map((error) => error.property).join(', ');
-  throw new BusinessException(
-    'pipe',
-    `${errProperty} pipe false`,
-    `${errProperty} pipe false`,
-    HttpStatus.BAD_REQUEST,
-  );
+  const errMsg = Object.values(errors[0].constraints).join(', ');
+  throw new BusinessException('pipe', errMsg, errMsg, HttpStatus.BAD_REQUEST);
 }
