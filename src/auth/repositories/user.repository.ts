@@ -39,4 +39,11 @@ export class UserRepository {
     };
     return result;
   }
+
+  async getAllUsers(): Promise<UserEntity[]> {
+    return await this.userRepo
+      .createQueryBuilder('user')
+      .select(['user.userId', 'user.name', 'user.userRole'])
+      .getMany();
+  }
 }

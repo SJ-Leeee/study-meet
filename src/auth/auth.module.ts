@@ -1,6 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
+import { AuthController } from './controllers/auth.controller';
+import { AuthService } from './services/auth.service';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from 'src/entities/Users';
@@ -14,6 +14,8 @@ import { JwtServiceStrategy } from './stradegies/jwtAuth.strategy';
 import { JwtRefreshStrategy } from './stradegies/jwtRefresh.strategy';
 import { GetJtiMiddleware } from './middlewares/getJti.middleware';
 import { adminAuthStrategy } from './stradegies/adminAuth.strategy';
+import { UserController } from './controllers/user.controller';
+import { UserService } from './services/user.service';
 
 @Module({
   imports: [
@@ -29,9 +31,10 @@ import { adminAuthStrategy } from './stradegies/adminAuth.strategy';
       }),
     }),
   ],
-  controllers: [AuthController],
+  controllers: [AuthController, UserController],
   providers: [
     AuthService,
+    UserService,
 
     JwtServiceStrategy,
     JwtRefreshStrategy,
@@ -43,6 +46,7 @@ import { adminAuthStrategy } from './stradegies/adminAuth.strategy';
   ],
   exports: [
     AuthService,
+    UserService,
 
     JwtServiceStrategy,
     JwtRefreshStrategy,

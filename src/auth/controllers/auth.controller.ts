@@ -7,13 +7,13 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { SignupUserDto } from './dto/signupUser.dto';
-import { LoginReqDto } from './dto/loginReq.dto';
+import { AuthService } from '../services/auth.service';
+import { SignupUserDto } from '../dto/signupUser.dto';
+import { LoginReqDto } from '../dto/loginReq.dto';
 import { Response, Request } from 'express';
-import { JwtAuthGuard } from './guards/jwtAuth.guard';
-import { JwtRefreshGuard } from './guards/jwtRefresh.guard';
-import { AdminAuthGuard } from './guards/adminAuth.guard';
+import { JwtAuthGuard } from '../guards/jwtAuth.guard';
+import { JwtRefreshGuard } from '../guards/jwtRefresh.guard';
+import { AdminAuthGuard } from '../guards/adminAuth.guard';
 
 @Controller('auth')
 export class AuthController {

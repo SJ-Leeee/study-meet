@@ -1,15 +1,15 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { SignupUserDto } from './dto/signupUser.dto';
+import { SignupUserDto } from '../dto/signupUser.dto';
 import { UserEntity } from 'src/entities/Users';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { TokenPayload } from './dto/tokenPayload.dto';
+import { TokenPayload } from '../dto/tokenPayload.dto';
 import { v4 as uuidv4 } from 'uuid';
-import { UserRepository } from './repositories/user.repository';
-import { LoginReqDto } from './dto/loginReq.dto';
+import { UserRepository } from '../repositories/user.repository';
+import { LoginReqDto } from '../dto/loginReq.dto';
 import { ConfigService } from '@nestjs/config';
-import { AccessTokenRepository } from './repositories/accessToken.repository';
-import { RefreshTokenRepository } from './repositories/refreshToken.repository';
+import { AccessTokenRepository } from '../repositories/accessToken.repository';
+import { RefreshTokenRepository } from '../repositories/refreshToken.repository';
 import { BusinessException } from 'src/exception/businessException';
 
 @Injectable()
