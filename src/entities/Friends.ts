@@ -19,11 +19,15 @@ export class FriendEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.friendUsers)
+  @ManyToOne(() => UserEntity, (user) => user.friendUsers, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'user' })
   user: UserEntity;
 
-  @ManyToOne(() => UserEntity, (user) => user.friendedUsers)
+  @ManyToOne(() => UserEntity, (user) => user.friendedUsers, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'targetUser' })
   targetUser: UserEntity;
 }

@@ -24,6 +24,8 @@ export class Tutor_certification_imageEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => Tutor_infoEntity, (tutor_info) => tutor_info.tutorImages)
+  @ManyToOne(() => Tutor_infoEntity, (tutor_info) => tutor_info.tutorImages, {
+    onDelete: 'CASCADE',
+  })
   tutorInfo: Tutor_infoEntity;
 }

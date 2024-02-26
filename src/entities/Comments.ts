@@ -24,11 +24,13 @@ export class CommentEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.comments)
+  @ManyToOne(() => UserEntity, (user) => user.comments, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user' })
   user: UserEntity;
 
-  @ManyToOne(() => BoardEntity, (board) => board.comments)
+  @ManyToOne(() => BoardEntity, (board) => board.comments, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'board' })
   board: BoardEntity;
 }

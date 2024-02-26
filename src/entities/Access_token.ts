@@ -33,7 +33,9 @@ export class AccessTokenEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.accessTokens)
+  @ManyToOne(() => UserEntity, (user) => user.accessTokens, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'user' })
   user: UserEntity;
 }

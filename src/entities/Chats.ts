@@ -23,11 +23,13 @@ export class ChatEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.senders)
+  @ManyToOne(() => UserEntity, (user) => user.senders, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'sender' })
   sender: UserEntity;
 
-  @ManyToOne(() => UserEntity, (user) => user.receivers)
+  @ManyToOne(() => UserEntity, (user) => user.receivers, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'reciever' })
   reciever: UserEntity;
 }

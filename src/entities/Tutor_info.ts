@@ -32,7 +32,7 @@ export class Tutor_infoEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToOne(() => UserEntity, { nullable: false })
+  @OneToOne(() => UserEntity, { nullable: false, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user' })
   user: UserEntity;
 

@@ -32,7 +32,9 @@ export class RefreshTokenEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.refreshTokens)
+  @ManyToOne(() => UserEntity, (user) => user.refreshTokens, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'user' })
   user: UserEntity;
 }

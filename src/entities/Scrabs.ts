@@ -21,11 +21,13 @@ export class ScrabEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.scrabs)
+  @ManyToOne(() => UserEntity, (user) => user.scrabs, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user' })
   user: UserEntity;
 
-  @ManyToOne(() => BoardEntity, (board) => board.scrabs)
+  @ManyToOne(() => BoardEntity, (board) => board.scrabs, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'board' })
   board: BoardEntity;
 }

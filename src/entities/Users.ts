@@ -51,7 +51,9 @@ export class UserEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => ReportEntity, (report) => report.user, { cascade: true })
+  @OneToMany(() => ReportEntity, (report) => report.user, {
+    cascade: true,
+  })
   reportUsers: ReportEntity[];
 
   @OneToMany(() => ReportEntity, (report) => report.reportedUser, {
@@ -59,7 +61,9 @@ export class UserEntity {
   })
   reportedUsers: ReportEntity[];
 
-  @OneToMany(() => FriendEntity, (friend) => friend.user, { cascade: true })
+  @OneToMany(() => FriendEntity, (friend) => friend.user, {
+    cascade: true,
+  })
   friendUsers: FriendEntity[];
 
   @OneToMany(() => FriendEntity, (friend) => friend.targetUser, {
@@ -77,13 +81,19 @@ export class UserEntity {
   })
   accessTokens: AccessTokenEntity[];
 
-  @OneToMany(() => ChatEntity, (chat) => chat.sender, { cascade: true })
+  @OneToMany(() => ChatEntity, (chat) => chat.sender, {
+    cascade: true,
+  })
   senders: ChatEntity[];
 
-  @OneToMany(() => ChatEntity, (chat) => chat.reciever, { cascade: true })
+  @OneToMany(() => ChatEntity, (chat) => chat.reciever, {
+    cascade: true,
+  })
   receivers: ChatEntity[];
 
-  @OneToMany(() => BoardEntity, (board) => board.user, { cascade: true })
+  @OneToMany(() => BoardEntity, (board) => board.user, {
+    cascade: true,
+  })
   boards: BoardEntity[];
 
   @OneToMany(() => CommentEntity, (comment) => comment.user, {
@@ -91,6 +101,8 @@ export class UserEntity {
   })
   comments: CommentEntity[];
 
-  @OneToMany(() => ScrabEntity, (scrab) => scrab.user, { cascade: true })
+  @OneToMany(() => ScrabEntity, (scrab) => scrab.user, {
+    cascade: true,
+  })
   scrabs: ScrabEntity[];
 }

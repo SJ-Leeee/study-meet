@@ -36,7 +36,7 @@ export class BoardEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.boards)
+  @ManyToOne(() => UserEntity, (user) => user.boards, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user' })
   user: UserEntity;
 
@@ -50,6 +50,8 @@ export class BoardEntity {
   })
   comments: CommentEntity[];
 
-  @OneToMany(() => ScrabEntity, (scrab) => scrab.board, { cascade: true })
+  @OneToMany(() => ScrabEntity, (scrab) => scrab.board, {
+    cascade: true,
+  })
   scrabs: ScrabEntity[];
 }

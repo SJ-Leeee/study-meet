@@ -26,7 +26,9 @@ export class Board_imageEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => BoardEntity, (board) => board.boardImages)
+  @ManyToOne(() => BoardEntity, (board) => board.boardImages, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'board' })
   board: BoardEntity;
 }
