@@ -1,29 +1,27 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
-import { Strategy } from 'passport-jwt';
+import { ExtractJwt, Strategy } from 'passport-jwt';
 import { BusinessException } from 'src/exception/businessException';
-import { RefreshTokenRepository } from '../repositories/refreshToken.repository';
+import { AccessTokenRepository } from '../repositories/accessToken.repository';
 
 @Injectable()
-export class JwtRefreshStrategy extends PassportStrategy(
+export class JwtServiceStrategy extends PassportStrategy(
   Strategy,
-  'jwt-refresh-strategy',
+  'jwtAuthStrategy',
 ) {
   constructor(
     readonly configService: ConfigService,
-    private readonly refreshRepo: RefreshTokenRepository,
+    private readonly accessRepo: AccessTokenRepository,
   ) {
     super({
       secretOrKey: configService.get<string>('JWT_SECRET_KEY'),
-      jwtFromRequest: (req) => {
-        return req.cookies['refreshToken'];
-      },
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false, // 2
     });
   }
   async validate(payload: any) {
-    const token = await this.refreshRepo.getRefreshWithJti(payload.jti);
+    const token = await this.accessRepo.getAccessWithJti(payload.jti);
     if (!token.available || !token) {
       throw new BusinessException(
         'token',
@@ -32,7 +30,6 @@ export class JwtRefreshStrategy extends PassportStrategy(
         HttpStatus.BAD_REQUEST,
       );
     }
-    console.log(token);
     return token.user;
   }
 }

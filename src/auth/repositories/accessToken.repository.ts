@@ -29,7 +29,7 @@ export class AccessTokenRepository {
   async getAccessWithJti(jti: string): Promise<AccessTokenEntity> {
     return await this.accessTokenRepo
       .createQueryBuilder('accessToken')
-      .select(['accessToken.available', 'user.userId']) // accessToken만 선택
+      .select(['accessToken.available', 'user.userId', 'user.userRole']) // accessToken만 선택
       .leftJoin('accessToken.user', 'user')
       .where('accessToken.jti = :jti', { jti })
       .getOne();

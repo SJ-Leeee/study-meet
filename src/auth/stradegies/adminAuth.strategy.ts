@@ -2,13 +2,13 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { BusinessException } from 'src/exception/businessException';
 import { AccessTokenRepository } from '../repositories/accessToken.repository';
+import { BusinessException } from 'src/exception/businessException';
 
 @Injectable()
-export class JwtServiceStrategy extends PassportStrategy(
+export class adminAuthStrategy extends PassportStrategy(
   Strategy,
-  'jwt-strategy',
+  'adminAuthStrategy',
 ) {
   constructor(
     readonly configService: ConfigService,
@@ -22,12 +22,12 @@ export class JwtServiceStrategy extends PassportStrategy(
   }
   async validate(payload: any) {
     const token = await this.accessRepo.getAccessWithJti(payload.jti);
-    if (!token.available || !token) {
+    if (token.user.userRole !== 'admin') {
       throw new BusinessException(
-        'token',
-        'invalid token',
-        'invalid token',
-        HttpStatus.BAD_REQUEST,
+        'auth',
+        'access for admin',
+        'access for admin',
+        HttpStatus.FORBIDDEN,
       );
     }
     return token.user;

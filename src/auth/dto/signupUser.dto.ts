@@ -1,4 +1,5 @@
 import { IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { UserRole } from 'src/entities/Users';
 
 export class SignupUserDto {
   @IsString()

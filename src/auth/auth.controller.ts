@@ -11,8 +11,9 @@ import { AuthService } from './auth.service';
 import { SignupUserDto } from './dto/signupUser.dto';
 import { LoginReqDto } from './dto/loginReq.dto';
 import { Response, Request } from 'express';
-import { JwtServiceAuthGuard } from './guards/jwt-service.guard';
-import { GetAccessWithRefreshGuard } from './guards/get-access-with-refresh.guard';
+import { JwtAuthGuard } from './guards/jwtAuth.guard';
+import { JwtRefreshGuard } from './guards/jwtRefresh.guard';
+import { AdminAuthGuard } from './guards/adminAuth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -42,7 +43,7 @@ export class AuthController {
   }
 
   // 액세스토큰 재발급
-  @UseGuards(GetAccessWithRefreshGuard)
+  @UseGuards(JwtRefreshGuard)
   @Post('/refresh')
   async accessWithRefresh(@Req() req, @Res() res: Response) {
     const accessToken = await this.authService.accessWithRefresh(
@@ -54,7 +55,7 @@ export class AuthController {
   }
 
   @Post('test')
-  @UseGuards(JwtServiceAuthGuard)
+  @UseGuards(AdminAuthGuard)
   async test() {
     return '응';
   }

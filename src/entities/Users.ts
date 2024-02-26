@@ -16,6 +16,12 @@ import { ScrabEntity } from './Scrabs';
 import { RefreshTokenEntity } from './Refresh_token';
 import { AccessTokenEntity } from './Access_token';
 
+export enum UserRole {
+  ADMIN = 'admin',
+  USER = 'user',
+  TUTOR = 'tutor',
+}
+
 @Entity({ schema: 'study_meet', name: 'users' })
 export class UserEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'userId' })
@@ -33,8 +39,8 @@ export class UserEntity {
   @Column('integer', { name: 'age' })
   age: number;
 
-  @Column('boolean', { default: false })
-  isTutor: number;
+  @Column('enum', { enum: UserRole, default: UserRole.USER })
+  userRole: UserRole;
 
   @Column('integer', { default: 0 })
   reportCount: number;

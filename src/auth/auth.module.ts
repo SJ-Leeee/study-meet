@@ -10,9 +10,10 @@ import { RefreshTokenRepository } from './repositories/refreshToken.repository';
 import { AccessTokenRepository } from './repositories/accessToken.repository';
 import { RefreshTokenEntity } from 'src/entities/Refresh_token';
 import { AccessTokenEntity } from 'src/entities/Access_token';
-import { JwtServiceStrategy } from './stradegies/jwt-service.stratedy';
-import { JwtRefreshStrategy } from './stradegies/jwt-refresh-strategy';
+import { JwtServiceStrategy } from './stradegies/jwtAuth.strategy';
+import { JwtRefreshStrategy } from './stradegies/jwtRefresh.strategy';
 import { GetJtiMiddleware } from './middlewares/getJti.middleware';
+import { adminAuthStrategy } from './stradegies/adminAuth.strategy';
 
 @Module({
   imports: [
@@ -31,16 +32,22 @@ import { GetJtiMiddleware } from './middlewares/getJti.middleware';
   controllers: [AuthController],
   providers: [
     AuthService,
+
     JwtServiceStrategy,
     JwtRefreshStrategy,
+    adminAuthStrategy,
+
     UserRepository,
     RefreshTokenRepository,
     AccessTokenRepository,
   ],
   exports: [
     AuthService,
+
     JwtServiceStrategy,
     JwtRefreshStrategy,
+    adminAuthStrategy,
+
     UserRepository,
     RefreshTokenRepository,
     AccessTokenRepository,

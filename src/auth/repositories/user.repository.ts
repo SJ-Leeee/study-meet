@@ -12,7 +12,10 @@ export class UserRepository {
   ) {}
 
   async findUserByEmail(email: string): Promise<UserEntity> {
-    return await this.userRepo.findOne({ where: { email } });
+    return await this.userRepo
+      .createQueryBuilder('user')
+      .where('user.email = :email', { email })
+      .getOne();
   }
 
   async findUserById(userId: number): Promise<UserEntity> {
