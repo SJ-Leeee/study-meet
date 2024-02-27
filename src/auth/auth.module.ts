@@ -16,6 +16,12 @@ import { GetJtiMiddleware } from './middlewares/getJti.middleware';
 import { adminAuthStrategy } from './stradegies/adminAuth.strategy';
 import { UserController } from './controllers/user.controller';
 import { UserService } from './services/user.service';
+import { UploadModule } from 'src/upload/upload.module';
+import { TutorController } from './controllers/tutor.controller';
+import { TutorService } from './services/tutor.service';
+import { TutorRepository } from './repositories/tutor.repository';
+import { Tutor_infoEntity } from 'src/entities/Tutor_info';
+import { Tutor_certification_imageEntity } from 'src/entities/Tutor_certification_image';
 
 @Module({
   imports: [
@@ -23,6 +29,8 @@ import { UserService } from './services/user.service';
       UserEntity,
       RefreshTokenEntity,
       AccessTokenEntity,
+      Tutor_infoEntity,
+      Tutor_certification_imageEntity,
     ]),
     JwtModule.registerAsync({
       inject: [ConfigService],
@@ -30,11 +38,13 @@ import { UserService } from './services/user.service';
         secret: configService.get('JWT_SECRET_KEY'),
       }),
     }),
+    UploadModule,
   ],
-  controllers: [AuthController, UserController],
+  controllers: [AuthController, UserController, TutorController],
   providers: [
     AuthService,
     UserService,
+    TutorService,
 
     JwtServiceStrategy,
     JwtRefreshStrategy,
@@ -43,6 +53,7 @@ import { UserService } from './services/user.service';
     UserRepository,
     RefreshTokenRepository,
     AccessTokenRepository,
+    TutorRepository,
   ],
   exports: [
     AuthService,

@@ -18,7 +18,7 @@ export class Tutor_infoEntity {
   tutorInfoId: number;
 
   @Column('text', { name: 'phoneNumber' })
-  phoneNumber: number;
+  phoneNumber: string;
 
   @Column('text', { name: 'selfIntroduce' })
   selfIntroduce: string;

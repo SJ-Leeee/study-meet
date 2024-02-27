@@ -3,6 +3,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { BusinessException } from 'src/exception/businessException';
 import { v4 as uuid, v4 } from 'uuid';
+import { UploadResDto } from './dto/uploadRes.dto';
 @Injectable()
 export class UploadService {
   s3Client: S3Client;
@@ -18,10 +19,9 @@ export class UploadService {
     });
   }
 
-  async tutorImageTest(file: Express.Multer.File) {
-    const fileName = uuid();
+  async tutorImageTest(file: Express.Multer.File): Promise<UploadResDto> {
+    const imageName = uuid();
     const ext = file.originalname.split('.').pop();
-
     if (!['png', 'jpg', 'jpeg', 'bmp'].includes(ext)) {
       throw new BusinessException(
         'file',
@@ -30,13 +30,13 @@ export class UploadService {
         HttpStatus.FORBIDDEN,
       );
     }
-    const imageUrl = await this.imageUploadToS3(
-      `${fileName}.${ext}`,
+    const imagePath = await this.imageUploadToS3(
+      `${imageName}.${ext}`,
       file,
       ext,
     );
 
-    return { imageUrl };
+    return { imageName, imagePath };
   }
   async imageUploadToS3(
     fileName: string, // 업로드될 파일의 이름

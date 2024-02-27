@@ -4,7 +4,6 @@ import {
   Delete,
   Get,
   Param,
-  Patch,
   Put,
   UseGuards,
 } from '@nestjs/common';
@@ -29,6 +28,7 @@ export class UserController {
     return await this.userService.getUserById(+userId);
   }
 
+  // 권한변경 api(ex 튜터, 관리자)
   @UseGuards(AdminAuthGuard)
   @Put('/:userId/role')
   async editUserRole(
@@ -38,6 +38,7 @@ export class UserController {
     await this.userService.editUserRole(+userId, role);
   }
 
+  // 유저삭제 api
   @UseGuards(AdminAuthGuard)
   @Delete('/:userId')
   async deleteUser(@Param('userId') userId: string): Promise<void> {
