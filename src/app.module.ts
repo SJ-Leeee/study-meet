@@ -16,6 +16,7 @@ import { Board_imageEntity } from './entities/Board_image';
 import { AuthModule } from './auth/auth.module';
 import { AccessTokenEntity } from './entities/Access_token';
 import { RefreshTokenEntity } from './entities/Refresh_token';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { RefreshTokenEntity } from './entities/Refresh_token';
       // 이모티콘 쓰기 위해
     }),
     AuthModule,
+    UploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],

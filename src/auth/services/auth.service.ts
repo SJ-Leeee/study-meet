@@ -166,8 +166,8 @@ export class AuthService {
   private async tokenBlackList(
     accessJti: string,
     refreshJti: string,
-  ): Promise<void> {
-    Promise.all([
+  ): Promise<any> {
+    return Promise.all([
       this.accessTokenRepo.blacklist(accessJti),
       this.refreshTokenRepo.blacklist(refreshJti),
     ]);

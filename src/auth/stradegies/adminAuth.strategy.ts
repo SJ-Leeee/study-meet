@@ -22,6 +22,14 @@ export class adminAuthStrategy extends PassportStrategy(
   }
   async validate(payload: any) {
     const token = await this.accessRepo.getAccessWithJti(payload.jti);
+    if (!token.available || !token) {
+      throw new BusinessException(
+        'token',
+        'jwt token error',
+        'jwt token error',
+        HttpStatus.UNAUTHORIZED,
+      );
+    }
     if (token.user.userRole !== 'admin') {
       throw new BusinessException(
         'auth',

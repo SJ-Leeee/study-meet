@@ -9,7 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from '../services/user.service';
-import { UserEntity, UserRole } from 'src/entities/Users';
+import { UserEntity } from 'src/entities/Users';
 import { AdminAuthGuard } from '../guards/adminAuth.guard';
 import { EditRoleDto } from '../dto/editRole.dto';
 
@@ -29,7 +29,7 @@ export class UserController {
     return await this.userService.getUserById(+userId);
   }
 
-  // @UseGuards(AdminAuthGuard)
+  @UseGuards(AdminAuthGuard)
   @Put('/:userId/role')
   async editUserRole(
     @Param('userId') userId: string,

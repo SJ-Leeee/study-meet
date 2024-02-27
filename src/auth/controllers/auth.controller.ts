@@ -53,10 +53,4 @@ export class AuthController {
     res.header('Authorization', `Bearer ${accessToken}`);
     res.json({ message: '액세스토큰발급' });
   }
-
-  @Post('test')
-  @UseGuards(AdminAuthGuard)
-  async test() {
-    return '응';
-  }
 }

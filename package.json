@@ -29,6 +29,7 @@
     "db:generate-migration": "npm run typeorm migration:generate -- ./src/migrations -d ./dataSource.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.521.0",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.1.1",
     "@nestjs/core": "^10.0.0",
@@ -37,11 +38,15 @@
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/typeorm": "^10.0.1",
     "@types/cookie-parser": "^1.4.6",
+    "@types/multer": "^1.4.11",
     "@types/uuid": "^9.0.8",
+    "aws-sdk": "^2.1566.0",
     "bcrypt": "^5.1.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "cookie-parser": "^1.4.6",
+    "multer": "^1.4.5-lts.1",
+    "multer-s3": "^3.0.1",
     "mysql2": "^3.9.1",
     "nest-winston": "^1.9.4",
     "passport": "^0.7.0",
