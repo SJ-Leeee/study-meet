@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { UserService } from '../services/user.service';
 import { UserEntity } from 'src/entities/Users';
-import { AdminAuthGuard } from '../guards/adminAuth.guard';
+import { AdminAuthGuard } from '../../guards/adminAuth.guard';
 import { EditRoleDto } from '../dto/editRole.dto';
 
 @Controller('user')

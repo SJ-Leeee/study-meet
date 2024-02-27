@@ -22,6 +22,14 @@ export class UploadService {
     const fileName = uuid();
     const ext = file.originalname.split('.').pop();
 
+    if (!['png', 'jpg', 'jpeg', 'bmp'].includes(ext)) {
+      throw new BusinessException(
+        'file',
+        'only png, jpg, jpeg, bmp file type',
+        'only png, jpg, jpeg, bmp file type',
+        HttpStatus.FORBIDDEN,
+      );
+    }
     const imageUrl = await this.imageUploadToS3(
       `${fileName}.${ext}`,
       file,

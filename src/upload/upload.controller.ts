@@ -1,10 +1,10 @@
 import {
   Controller,
   Post,
-  UploadedFile,
+  UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { UploadService } from './upload.service';
 
 @Controller('upload')
@@ -12,8 +12,19 @@ export class UploadController {
   constructor(private readonly uploadService: UploadService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('file'))
-  async fileTest(@UploadedFile() file: Express.Multer.File) {
-    return await this.uploadService.tutorImageTest(file);
+  @UseInterceptors(
+    FilesInterceptor('images', 10, {
+      limits: { fileSize: 1024 * 1024 * 10 },
+    }),
+  )
+  async fileTest(@UploadedFiles() files: Express.Multer.File[]) {
+    const imgurls: object[] = [];
+    await Promise.all(
+      files.map(async (file: Express.Multer.File) => {
+        const imgurl = await this.uploadService.tutorImageTest(file);
+        imgurls.push(imgurl);
+      }),
+    );
+    return imgurls;
   }
 }
