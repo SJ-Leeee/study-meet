@@ -30,14 +30,6 @@ export class TutorService {
       }),
     );
     const user = await this.userRepo.findUserById(userId);
-    if (!user) {
-      throw new BusinessException(
-        'tutor',
-        'user is not exist',
-        'user is not exist',
-        HttpStatus.NOT_FOUND,
-      );
-    }
     const exTutorInfo = await this.tutorRepo.findTutorInfoByUserId(userId);
     if (exTutorInfo) {
       throw new BusinessException(
@@ -54,7 +46,7 @@ export class TutorService {
   private async saveTutorInfo(
     user: UserEntity,
     tutorDto: ApplyTutorDto,
-    imgObjs: UploadResDto[],
+    imgResDto: UploadResDto[],
   ) {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
@@ -66,7 +58,7 @@ export class TutorService {
         await this.tutorRepo.findTutorInfoByTutorInfoId(tutorInfoId);
 
       await Promise.all(
-        imgObjs.map(async (img) => {
+        imgResDto.map(async (img) => {
           await this.tutorRepo.saveTutorImg(tutorInfo, img);
         }),
       );

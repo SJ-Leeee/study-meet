@@ -17,6 +17,7 @@ import { AuthModule } from './auth/auth.module';
 import { AccessTokenEntity } from './entities/Access_token';
 import { RefreshTokenEntity } from './entities/Refresh_token';
 import { UploadModule } from './upload/upload.module';
+import { BoardModule } from './board/board.module';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { UploadModule } from './upload/upload.module';
     }),
     AuthModule,
     UploadModule,
+    BoardModule,
   ],
   controllers: [AppController],
   providers: [AppService],

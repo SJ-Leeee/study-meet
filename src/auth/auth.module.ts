@@ -58,6 +58,7 @@ import { Tutor_certification_imageEntity } from 'src/entities/Tutor_certificatio
   exports: [
     AuthService,
     UserService,
+    TutorService,
 
     JwtServiceStrategy,
     JwtRefreshStrategy,
