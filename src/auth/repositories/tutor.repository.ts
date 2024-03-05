@@ -17,7 +17,7 @@ export class TutorRepository {
     private readonly tutorImgRepo: Repository<Tutor_certification_imageEntity>,
   ) {}
 
-  async findTutorInfoById(userId: number): Promise<Tutor_infoEntity> {
+  async findTutorInfoByUserId(userId: number): Promise<Tutor_infoEntity> {
     return await this.tutorInfoRepo
       .createQueryBuilder('info')
       .where('info.user = :userId', { userId })
@@ -39,10 +39,14 @@ export class TutorRepository {
     return tutorinfoId;
   }
 
-  async getTutorInfoById(tutorInfoId: number): Promise<Tutor_infoEntity> {
+  async findTutorInfoByTutorInfoId(
+    tutorInfoId: number,
+  ): Promise<Tutor_infoEntity> {
     return await this.tutorInfoRepo
       .createQueryBuilder('info')
+      .leftJoinAndSelect('info.user', 'user')
       .where('info.tutorInfoId = :tutorInfoId', { tutorInfoId })
+      .select(['info', 'user.userId'])
       .getOne();
   }
 
@@ -69,5 +73,14 @@ export class TutorRepository {
       .leftJoinAndSelect('t.tutorImages', 'img')
       .select(['t', 'u.userId', 'u.userRole', 'img.imagePath'])
       .getMany();
+  }
+
+  async setApply(tutorInfoId: number, apply: boolean) {
+    return await this.tutorInfoRepo
+      .createQueryBuilder()
+      .update(Tutor_infoEntity)
+      .set({ apply })
+      .where('tutorInfoId = :tutorInfoId', { tutorInfoId })
+      .execute();
   }
 }

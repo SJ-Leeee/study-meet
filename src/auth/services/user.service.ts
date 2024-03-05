@@ -8,10 +8,12 @@ import { EditRoleDto } from '../dto/editRole.dto';
 export class UserService {
   constructor(private readonly userRepo: UserRepository) {}
 
+  // 모든유저정보
   async getAllUsers(): Promise<UserEntity[]> {
     return await this.userRepo.getAllUsers();
   }
 
+  // 유저정보를Id로
   async getUserById(userId: number): Promise<any> {
     const user = await this.userRepo.findUserById(userId);
     if (!user) {
@@ -26,6 +28,7 @@ export class UserService {
     return result;
   }
 
+  // 유저역할변경
   async editUserRole(userId: number, role: EditRoleDto): Promise<void> {
     const user = await this.userRepo.findUserById(userId);
     if (!user) {
@@ -39,6 +42,7 @@ export class UserService {
     await this.userRepo.updateUser(userId, role);
   }
 
+  // 유저삭제
   async deleteUser(userId: number): Promise<void> {
     const user = await this.userRepo.findUserById(userId);
     if (!user) {

@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   UploadedFiles,
   UseGuards,
@@ -20,10 +21,7 @@ import { Tutor_infoEntity } from 'src/entities/Tutor_info';
 
 @Controller('tutor')
 export class TutorController {
-  constructor(
-    private readonly uploadService: UploadService,
-    private readonly tutorService: TutorService,
-  ) {}
+  constructor(private readonly tutorService: TutorService) {}
 
   // 튜터 신청 api
   @UseGuards(JwtAuthGuard)
@@ -47,5 +45,15 @@ export class TutorController {
   @Get()
   async getTutorApplyList(): Promise<Tutor_infoEntity[]> {
     return this.tutorService.getTutorApplyList();
+  }
+
+  // 튜터승인
+  @UseGuards(AdminAuthGuard)
+  @Patch('/:tutorInfoId')
+  async editTutorApplyList(
+    @Param('tutorInfoId') tutorInfoId: string,
+    @Body('apply') apply: boolean,
+  ): Promise<any> {
+    return await this.tutorService.editTutorRole(+tutorInfoId, apply);
   }
 }

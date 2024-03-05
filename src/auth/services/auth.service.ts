@@ -163,6 +163,7 @@ export class AuthService {
     await this.tokenBlackList(jtiAccess.jti, jtiRefresh.jti);
   }
 
+  // 로그아웃 - 토큰의 available false
   private async tokenBlackList(
     accessJti: string,
     refreshJti: string,
