@@ -21,7 +21,7 @@ export class UploadController {
     const imgurls: object[] = [];
     await Promise.all(
       files.map(async (file: Express.Multer.File) => {
-        const imgurl = await this.uploadService.tutorImageTest(file);
+        const imgurl = await this.uploadService.imageUpload(file);
         imgurls.push(imgurl);
       }),
     );

@@ -39,15 +39,17 @@ export class TutorRepository {
     return tutorinfoId;
   }
 
-  async getTutorInfoById(tutorInfoId: number) {
+  async getTutorInfoById(tutorInfoId: number): Promise<Tutor_infoEntity> {
     return await this.tutorInfoRepo
       .createQueryBuilder('info')
       .where('info.tutorInfoId = :tutorInfoId', { tutorInfoId })
       .getOne();
   }
 
-  async saveTutorImg(tutorInfo: Tutor_infoEntity, imgResDto: UploadResDto) {
-    console.log('빈배열인데 하겠냐고');
+  async saveTutorImg(
+    tutorInfo: Tutor_infoEntity,
+    imgResDto: UploadResDto,
+  ): Promise<void> {
     const imgEntity = new Tutor_certification_imageEntity();
     imgEntity.imageName = imgResDto.imageName;
     imgEntity.imagePath = imgResDto.imagePath;
@@ -58,5 +60,14 @@ export class TutorRepository {
       .into(Tutor_certification_imageEntity)
       .values(imgEntity)
       .execute();
+  }
+
+  async getTutors(): Promise<Tutor_infoEntity[]> {
+    return await this.tutorInfoRepo
+      .createQueryBuilder('t')
+      .leftJoinAndSelect('t.user', 'u')
+      .leftJoinAndSelect('t.tutorImages', 'img')
+      .select(['t', 'u.userId', 'u.userRole', 'img.imagePath'])
+      .getMany();
   }
 }

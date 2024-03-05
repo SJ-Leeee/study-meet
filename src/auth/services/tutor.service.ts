@@ -5,19 +5,27 @@ import { BusinessException } from 'src/exception/businessException';
 import { TutorRepository } from '../repositories/tutor.repository';
 import { UserEntity } from 'src/entities/Users';
 import { UploadResDto } from 'src/upload/dto/uploadRes.dto';
+import { Tutor_infoEntity } from 'src/entities/Tutor_info';
+import { UploadService } from 'src/upload/upload.service';
 
 @Injectable()
 export class TutorService {
   constructor(
     private readonly userRepo: UserRepository,
     private readonly tutorRepo: TutorRepository,
+    private readonly uploadService: UploadService,
   ) {}
 
   async applyTutor(
     userId: number,
     tutorDto: ApplyTutorDto,
-    imgObjs: UploadResDto[],
-  ) {
+    files: Express.Multer.File[],
+  ): Promise<void> {
+    const imgResDto = await Promise.all(
+      files.map(async (file: Express.Multer.File) => {
+        return await this.uploadService.imageUpload(file);
+      }),
+    );
     const user = await this.userRepo.findUserById(userId);
     if (!user) {
       throw new BusinessException(
@@ -36,8 +44,7 @@ export class TutorService {
         HttpStatus.CONFLICT,
       );
     }
-    const result = await this.saveTutorInfo(user, tutorDto, imgObjs);
-    // console.log(result);
+    await this.saveTutorInfo(user, tutorDto, imgResDto);
   }
 
   private async saveTutorInfo(
@@ -57,5 +64,9 @@ export class TutorService {
     } catch (err) {
       console.error(err);
     }
+  }
+
+  async getTutorApplyList(): Promise<Tutor_infoEntity[]> {
+    return this.tutorRepo.getTutors();
   }
 }

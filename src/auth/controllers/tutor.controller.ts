@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Param,
   Post,
   UploadedFiles,
@@ -14,6 +15,8 @@ import { TutorService } from '../services/tutor.service';
 import { JwtAuthGuard } from 'src/guards/jwtAuth.guard';
 import { User } from 'src/common/decorator/user.decorator';
 import { UploadResDto } from 'src/upload/dto/uploadRes.dto';
+import { AdminAuthGuard } from 'src/guards/adminAuth.guard';
+import { Tutor_infoEntity } from 'src/entities/Tutor_info';
 
 @Controller('tutor')
 export class TutorController {
@@ -34,14 +37,15 @@ export class TutorController {
     @UploadedFiles() files: Express.Multer.File[],
     @Body() applyTutorDto: ApplyTutorDto,
     @User() user,
-  ) {
-    const imgPaths = await Promise.all(
-      files.map(async (file: Express.Multer.File) => {
-        return await this.uploadService.tutorImageTest(file);
-      }),
-    );
+  ): Promise<any> {
+    await this.tutorService.applyTutor(user.userId, applyTutorDto, files);
+    return { message: '신청이 완료되었습니다.' };
+  }
 
-    await this.tutorService.applyTutor(user.userId, applyTutorDto, imgPaths);
-    return 'ggmg';
+  // 튜터신청리스트 확인
+  @UseGuards(AdminAuthGuard)
+  @Get()
+  async getTutorApplyList(): Promise<Tutor_infoEntity[]> {
+    return this.tutorService.getTutorApplyList();
   }
 }

@@ -19,7 +19,7 @@ export class UploadService {
     });
   }
 
-  async tutorImageTest(file: Express.Multer.File): Promise<UploadResDto> {
+  async imageUpload(file: Express.Multer.File): Promise<UploadResDto> {
     const imageName = uuid();
     const ext = file.originalname.split('.').pop();
     if (!['png', 'jpg', 'jpeg', 'bmp'].includes(ext)) {

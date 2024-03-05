@@ -32,7 +32,6 @@ export class JwtRefreshStrategy extends PassportStrategy(
         HttpStatus.BAD_REQUEST,
       );
     }
-    console.log(token);
     return token.user;
   }
 }
