@@ -1,7 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
+  Get,
   Post,
+  Put,
   UploadedFiles,
   UseGuards,
   UseInterceptors,
@@ -28,6 +31,21 @@ export class BoardController {
     @UploadedFiles() files: Express.Multer.File[],
     @User() user,
   ) {
-    return await this.boardService.postBoard(user.userId, postBoardDto, files);
+    await this.boardService.postBoard(user.userId, postBoardDto, files);
+    return { message: 'success' };
   }
+
+  @Get()
+  async getAllBoards() {
+    return await this.boardService.getAllBoards();
+  }
+
+  @Get(':/id')
+  async getBoard() {}
+
+  @Delete()
+  deleteBoard() {}
+
+  @Put()
+  async editBoard() {}
 }

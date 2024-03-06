@@ -60,4 +60,21 @@ export class UploadService {
     return `https://s3.${process.env.AWS_REGION}.amazonaws.com/${process.env.AWS_S3_BUCKET_NAME}/${fileName}`;
     // 업로드된 이미지의 URL을 반환합니다.
   }
+
+  // async deleteImageFromS3(imageUrl: string): Promise<void> {
+  //   // 업로드된 이미지의 URL에서 파일 이름을 추출합니다.
+  //   const fileName = imageUrl.split('/').pop();
+
+  //   try {
+  //     const command = new DeleteObjectCommand({
+  //       Bucket: this.configService.get('AWS_S3_BUCKET_NAME'), // S3 버킷 이름
+  //       Key: fileName, // 삭제할 파일의 이름
+  //     });
+
+  //     // 생성된 명령을 S3 클라이언트에 전달하여 이미지 삭제를 수행합니다.
+  //     await this.s3Client.send(command);
+  //   } catch (err) {
+  //     throw new BusinessException('file', err, err, HttpStatus.BAD_REQUEST);
+  //   }
+  // }
 }

@@ -29,4 +29,21 @@ export class BoardRepository {
       .where('boardId = :boardId', { boardId: result.identifiers[0].boardId })
       .getOne();
   }
+
+  // 모든게시물 조회
+  async getAllBoards() {
+    return this.boardRepo
+      .createQueryBuilder('b')
+      .leftJoinAndSelect('b.boardImages', 'img')
+      .leftJoinAndSelect('b.user', 'u')
+      .select([
+        'u.name',
+        'b.title',
+        'b.content',
+        'b.viewCount',
+        'b.createdAt',
+        'img.imagePath',
+      ])
+      .getMany();
+  }
 }

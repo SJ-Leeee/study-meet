@@ -16,6 +16,7 @@ export class BoardService {
     private readonly dataSource: DataSource,
   ) {}
 
+  // 게시물 게시
   async postBoard(
     userId: number,
     postBoardDto: PostBoardDto,
@@ -33,6 +34,7 @@ export class BoardService {
         }),
       );
       const user = await this.userRepo.findUserById(userId);
+      // 이미지와 보드저장
       const board = await this.boardRepo.postBoard(user, postBoardDto);
       await Promise.all(
         imgResDto.map(async (img) => {
@@ -45,5 +47,10 @@ export class BoardService {
     } finally {
       await queryRunner.release();
     }
+  }
+
+  // 모든게시물조회
+  async getAllBoards() {
+    return await this.boardRepo.getAllBoards();
   }
 }
