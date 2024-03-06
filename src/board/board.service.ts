@@ -5,6 +5,7 @@ import { BoardRepository } from './repositories/board.repository';
 import { UploadService } from 'src/upload/upload.service';
 import { BoardImageRepository } from './repositories/boardImage.repository';
 import { DataSource } from 'typeorm';
+import { BoardEntity } from 'src/entities/Boards';
 
 @Injectable()
 export class BoardService {
@@ -50,7 +51,15 @@ export class BoardService {
   }
 
   // 모든게시물조회
-  async getAllBoards() {
+  async getAllBoards(): Promise<BoardEntity[]> {
     return await this.boardRepo.getAllBoards();
+  }
+  // id로 게시물조회
+  async getBoard(id: number): Promise<BoardEntity> {
+    try {
+      return await this.boardRepo.getBoardById(id);
+    } catch (err) {
+      console.error(err);
+    }
   }
 }

@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Post,
   Put,
   UploadedFiles,
@@ -40,8 +41,10 @@ export class BoardController {
     return await this.boardService.getAllBoards();
   }
 
-  @Get(':/id')
-  async getBoard() {}
+  @Get('/:id')
+  async getBoard(@Param('id') id: string) {
+    return await this.boardService.getBoard(+id);
+  }
 
   @Delete()
   deleteBoard() {}
