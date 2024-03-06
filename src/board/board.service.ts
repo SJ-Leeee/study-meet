@@ -80,20 +80,63 @@ export class BoardService {
         HttpStatus.FORBIDDEN,
       );
     }
-    await this.deleteBoardImg(board);
+    await this.deleteBoardImg(board.boardImages);
     await this.boardRepo.deleteBoardById(boardId);
   }
 
-  // 게시물 삭제 - 이미지삭제
-  private async deleteBoardImg(board: BoardEntity): Promise<void> {
-    const imagePaths: string[] = board.boardImages.map(
-      (image) => image.imagePath,
-    );
+  // 게시물 삭제 - 이미지삭제, s3와 데이터베이스에서
+  private async deleteBoardImg(boardImg: Board_imageEntity[]): Promise<void> {
+    const imagePaths: string[] = boardImg.map((img) => img.imagePath);
 
     Promise.all([
       imagePaths.map(async (img) => {
         await this.uploadService.deleteImageFromS3(img);
+        await this.boardImgRepo.deleteImage(img);
       }),
     ]);
+  }
+
+  async editBoard(
+    user: reqUserDto,
+    boardId: number,
+    postBoardDto: PostBoardDto,
+    files: Express.Multer.File[],
+  ) {
+    const board = await this.boardRepo.getBoardById(boardId);
+    if (!board)
+      throw new BusinessException(
+        'board',
+        'not found',
+        'not found',
+        HttpStatus.NOT_FOUND,
+      );
+    if (board.user.userId !== user.userId && user.userRole !== 'admin') {
+      throw new BusinessException(
+        'board',
+        `Don't have permission`,
+        `Don't have permission`,
+        HttpStatus.FORBIDDEN,
+      );
+    }
+    // 이미지삭제 여기서 s3와 db에서 삭제
+    await this.deleteBoardImg(board.boardImages);
+    // 여기서 보드수정
+    await this.boardRepo.editBoardById(boardId, postBoardDto);
+    // 여기서 새로운 이미지 추가
+    await this.postBoardImg(files, board);
+  }
+
+  // 게시물 이미지 추가
+  private async postBoardImg(files: Express.Multer.File[], board: BoardEntity) {
+    const imgResDto = await Promise.all(
+      files.map(async (file: Express.Multer.File) => {
+        return await this.uploadService.imageUpload(file);
+      }),
+    );
+    await Promise.all(
+      imgResDto.map(async (img) => {
+        await this.boardImgRepo.postBoardImg(board, img);
+      }),
+    );
   }
 }

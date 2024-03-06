@@ -26,4 +26,15 @@ export class BoardImageRepository {
       .values(boardImgObj)
       .execute();
   }
+
+  async deleteImage(imgPath: string) {
+    const imageName = imgPath.split('/').pop().split('.')[0];
+    console.log(imageName);
+    await this.boardImgRepo
+      .createQueryBuilder()
+      .delete()
+      .from(Board_imageEntity)
+      .where('imageName = :imageName', { imageName })
+      .execute();
+  }
 }

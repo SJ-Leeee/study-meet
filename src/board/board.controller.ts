@@ -54,6 +54,19 @@ export class BoardController {
     return { message: 'success' };
   }
 
-  @Put()
-  async editBoard() {}
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(
+    FilesInterceptor('images', 10, {
+      limits: { fileSize: 1024 * 1024 * 10 },
+    }),
+  )
+  @Put('/:id')
+  async editBoard(
+    @Body() postBoardDto: PostBoardDto,
+    @UploadedFiles() files: Express.Multer.File[],
+    @User() user: reqUserDto,
+    @Param('id') boardId: string,
+  ) {
+    await this.boardService.editBoard(user, +boardId, postBoardDto, files);
+  }
 }

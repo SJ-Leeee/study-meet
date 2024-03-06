@@ -77,4 +77,13 @@ export class BoardRepository {
       .where('boardId = :boardId', { boardId })
       .execute();
   }
+
+  async editBoardById(boardId: number, postBoardDto: PostBoardDto) {
+    await this.boardRepo
+      .createQueryBuilder()
+      .update(BoardEntity)
+      .set({ title: postBoardDto.title, content: postBoardDto.content })
+      .where('boardId = :boardId', { boardId })
+      .execute();
+  }
 }
