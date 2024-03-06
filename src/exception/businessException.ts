@@ -7,7 +7,8 @@ export type ErrorDomain =
   | 'pipe'
   | 'user'
   | 'file'
-  | 'tutor';
+  | 'tutor'
+  | 'board';
 
 export class BusinessException extends Error {
   public readonly id: string;

@@ -57,6 +57,7 @@ export class BoardRepository {
       .leftJoinAndSelect('b.user', 'u')
       .select([
         'u.name',
+        'u.userId',
         'b.boardId',
         'b.title',
         'b.content',
@@ -66,5 +67,14 @@ export class BoardRepository {
       ])
       .where('b.boardId = :id', { id })
       .getOne();
+  }
+
+  async deleteBoardById(boardId: number): Promise<void> {
+    await this.boardRepo
+      .createQueryBuilder()
+      .delete()
+      .from(BoardEntity)
+      .where('boardId = :boardId', { boardId })
+      .execute();
   }
 }

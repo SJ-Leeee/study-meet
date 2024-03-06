@@ -15,6 +15,7 @@ import { JwtAuthGuard } from 'src/guards/jwtAuth.guard';
 import { PostBoardDto } from './dto/postBoardReq.dto';
 import { User } from 'src/common/decorator/user.decorator';
 import { BoardService } from './board.service';
+import { reqUserDto } from 'src/common/dto/requser.dto';
 
 @Controller('board')
 export class BoardController {
@@ -46,8 +47,12 @@ export class BoardController {
     return await this.boardService.getBoard(+id);
   }
 
-  @Delete()
-  deleteBoard() {}
+  @UseGuards(JwtAuthGuard)
+  @Delete('/:id')
+  async deleteBoard(@Param('id') boardId: string, @User() user: reqUserDto) {
+    await this.boardService.deleteBoard(user, +boardId);
+    return { message: 'success' };
+  }
 
   @Put()
   async editBoard() {}
