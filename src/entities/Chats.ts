@@ -8,6 +8,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { UserEntity } from './Users';
+import { bool } from 'aws-sdk/clients/signer';
+import { RoomEntity } from './Rooms';
 
 @Entity({ schema: 'study_meet', name: 'chats' })
 export class ChatEntity {
@@ -15,7 +17,10 @@ export class ChatEntity {
   chatId: number;
 
   @Column('text', { name: 'chatDetail' })
-  chatDetail: string;
+  message: string;
+
+  @Column('boolean')
+  isSend: boolean;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -23,13 +28,9 @@ export class ChatEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.senders, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'sender' })
-  sender: UserEntity;
-
-  @ManyToOne(() => UserEntity, (user) => user.receivers, {
+  @ManyToOne(() => RoomEntity, (room) => room.chats, {
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'reciever' })
-  reciever: UserEntity;
+  @JoinColumn()
+  room: RoomEntity;
 }

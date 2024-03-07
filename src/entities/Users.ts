@@ -15,6 +15,7 @@ import { CommentEntity } from './Comments';
 import { ScrabEntity } from './Scrabs';
 import { RefreshTokenEntity } from './Refresh_token';
 import { AccessTokenEntity } from './Access_token';
+import { RoomEntity } from './Rooms';
 
 export enum UserRole {
   ADMIN = 'admin',
@@ -81,15 +82,15 @@ export class UserEntity {
   })
   accessTokens: AccessTokenEntity[];
 
-  @OneToMany(() => ChatEntity, (chat) => chat.sender, {
+  @OneToMany(() => RoomEntity, (room) => room.firstUser, {
     cascade: true,
   })
-  senders: ChatEntity[];
+  firstUsers: RoomEntity[];
 
-  @OneToMany(() => ChatEntity, (chat) => chat.reciever, {
+  @OneToMany(() => RoomEntity, (room) => room.secondUser, {
     cascade: true,
   })
-  receivers: ChatEntity[];
+  secondUsers: RoomEntity[];
 
   @OneToMany(() => BoardEntity, (board) => board.user, {
     cascade: true,
