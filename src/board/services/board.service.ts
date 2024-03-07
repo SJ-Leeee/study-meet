@@ -1,9 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { PostBoardDto } from './dto/postBoardReq.dto';
+import { PostBoardDto } from '../dto/postBoardReq.dto';
 import { UserRepository } from 'src/auth/repositories/user.repository';
-import { BoardRepository } from './repositories/board.repository';
+import { BoardRepository } from '../repositories/board.repository';
 import { UploadService } from 'src/upload/upload.service';
-import { BoardImageRepository } from './repositories/boardImage.repository';
+import { BoardImageRepository } from '../repositories/boardImage.repository';
 import { DataSource } from 'typeorm';
 import { BoardEntity } from 'src/entities/Boards';
 import { reqUserDto } from 'src/common/dto/requser.dto';
@@ -84,18 +84,7 @@ export class BoardService {
     await this.boardRepo.deleteBoardById(boardId);
   }
 
-  // 게시물 삭제 - 이미지삭제, s3와 데이터베이스에서
-  private async deleteBoardImg(boardImg: Board_imageEntity[]): Promise<void> {
-    const imagePaths: string[] = boardImg.map((img) => img.imagePath);
-
-    Promise.all([
-      imagePaths.map(async (img) => {
-        await this.uploadService.deleteImageFromS3(img);
-        await this.boardImgRepo.deleteImage(img);
-      }),
-    ]);
-  }
-
+  // 게시물 수정
   async editBoard(
     user: reqUserDto,
     boardId: number,
@@ -126,7 +115,7 @@ export class BoardService {
     await this.postBoardImg(files, board);
   }
 
-  // 게시물 이미지 추가
+  // 게시물 이미지 추가, s3와 데이터베이스에서
   private async postBoardImg(files: Express.Multer.File[], board: BoardEntity) {
     const imgResDto = await Promise.all(
       files.map(async (file: Express.Multer.File) => {
@@ -138,5 +127,16 @@ export class BoardService {
         await this.boardImgRepo.postBoardImg(board, img);
       }),
     );
+  }
+  // 게시물 이미지삭제, s3와 데이터베이스에서
+  private async deleteBoardImg(boardImg: Board_imageEntity[]): Promise<void> {
+    const imagePaths: string[] = boardImg.map((img) => img.imagePath);
+
+    Promise.all([
+      imagePaths.map(async (img) => {
+        await this.uploadService.deleteImageFromS3(img);
+        await this.boardImgRepo.deleteImage(img);
+      }),
+    ]);
   }
 }
