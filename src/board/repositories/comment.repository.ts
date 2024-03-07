@@ -29,12 +29,47 @@ export class CommentRepository {
       .execute();
   }
 
-  async findAllComments(boardId: number) {
+  async findAllComments(boardId: number): Promise<CommentEntity[]> {
     return await this.cmtRepo
       .createQueryBuilder('c')
       .leftJoinAndSelect('c.user', 'u')
-      .select(['u.name', 'u.userRole', 'c.comment', 'c.createdAt'])
+      .select([
+        'u.name',
+        'u.userRole',
+        'c.commentId',
+        'c.comment',
+        'c.createdAt',
+      ])
       .where('c.board.boardId = :boardId', { boardId })
       .getMany();
+  }
+
+  async findComment(commentId: number): Promise<CommentEntity> {
+    return await this.cmtRepo
+      .createQueryBuilder('c')
+      .leftJoinAndSelect('c.user', 'u')
+      .select(['c', 'u.userId'])
+      .where('c.commentId = :commentId', { commentId })
+      .getOne();
+  }
+
+  async editComment(commentId: number, cmtDto: PostCommentDto): Promise<void> {
+    await this.cmtRepo
+      .createQueryBuilder()
+      .update(CommentEntity)
+      .set({
+        comment: cmtDto.comment,
+      })
+      .where('commentId = :commentId', { commentId })
+      .execute();
+  }
+
+  async deleteComment(commentId: number): Promise<void> {
+    await this.cmtRepo
+      .createQueryBuilder()
+      .delete()
+      .from(CommentEntity)
+      .where('commentId = :commentId', { commentId })
+      .execute();
   }
 }

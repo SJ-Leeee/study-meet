@@ -34,9 +34,27 @@ export class CommentController {
     return await this.cmtService.getAllComments(+boardId);
   }
 
-  @Put()
-  async editComment() {}
+  @UseGuards(JwtAuthGuard)
+  @Put('/:commentId')
+  async editComment(
+    @Param() ids,
+    @Body() cmtDto: PostCommentDto,
+    @User() user: ReqUserDto,
+  ): Promise<any> {
+    await this.cmtService.editComment(
+      user,
+      cmtDto,
+      +ids.boardId,
+      +ids.commentId,
+    );
 
-  @Delete()
-  async deleteComment() {}
+    return { message: 'success' };
+  }
+  @UseGuards(JwtAuthGuard)
+  @Delete('/:commentId')
+  async deleteComment(@Param() ids, @User() user: ReqUserDto): Promise<any> {
+    await this.cmtService.deleteCommment(user, +ids.boardId, +ids.commentId);
+
+    return { message: 'success' };
+  }
 }

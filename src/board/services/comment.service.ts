@@ -45,4 +45,42 @@ export class CommentService {
 
     return await this.cmtRepo.findAllComments(boardId);
   }
+  async editComment(
+    userDto: ReqUserDto,
+    cmtDto: PostCommentDto,
+    boardId: number,
+    commentId: number,
+  ): Promise<void> {
+    const board = await this.boardRepo.findBoardById(boardId);
+    const comment = await this.cmtRepo.findComment(commentId);
+    if (comment.user.userId !== userDto.userId || !board) {
+      throw new BusinessException(
+        'comment',
+        'permission does not exist',
+        'permission does not exist',
+        HttpStatus.FORBIDDEN,
+      );
+    }
+
+    await this.cmtRepo.editComment(commentId, cmtDto);
+  }
+
+  async deleteCommment(
+    userDto: ReqUserDto,
+    boardId: number,
+    commentId: number,
+  ): Promise<void> {
+    const board = await this.boardRepo.findBoardById(boardId);
+    const comment = await this.cmtRepo.findComment(commentId);
+    if (comment.user.userId !== userDto.userId || !board) {
+      throw new BusinessException(
+        'comment',
+        'permission does not exist',
+        'permission does not exist',
+        HttpStatus.FORBIDDEN,
+      );
+    }
+
+    await this.cmtRepo.deleteComment(commentId);
+  }
 }

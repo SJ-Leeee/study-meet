@@ -1,14 +1,18 @@
-import { NestFactory } from '@nestjs/core';
+import { NestApplication, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
 import { ValidationPipeOption, getNestOptions } from './app.option';
 import { BusinessExceptionFilter } from './exception/businessExceptionFilter';
+import { join } from 'path';
 declare const module: any;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, getNestOptions());
+  const app = await NestFactory.create<NestApplication>(
+    AppModule,
+    getNestOptions(),
+  );
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -17,6 +21,9 @@ async function bootstrap() {
   );
   app.use(cookieParser());
   app.useGlobalFilters(new BusinessExceptionFilter());
+  app.useStaticAssets(join(__dirname, '..', 'static'));
+
+  app.enableCors();
   const configService = app.get(ConfigService);
   const port = configService.get<number>('PORT');
   if (module.hot) {
