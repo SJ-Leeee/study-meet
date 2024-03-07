@@ -27,7 +27,6 @@ export class BoardImageRepository {
 
   async deleteImage(imgPath: string) {
     const imageName = imgPath.split('/').pop().split('.')[0];
-    console.log(imageName);
     await this.boardImgRepo
       .createQueryBuilder()
       .delete()

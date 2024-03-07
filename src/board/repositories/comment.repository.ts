@@ -28,4 +28,13 @@ export class CommentRepository {
       .values(comment)
       .execute();
   }
+
+  async findAllComments(boardId: number) {
+    return await this.cmtRepo
+      .createQueryBuilder('c')
+      .leftJoinAndSelect('c.user', 'u')
+      .select(['u.name', 'u.userRole', 'c.comment', 'c.createdAt'])
+      .where('c.board.boardId = :boardId', { boardId })
+      .getMany();
+  }
 }

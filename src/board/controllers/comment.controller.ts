@@ -30,7 +30,9 @@ export class CommentController {
   }
 
   @Get()
-  async getComment() {}
+  async getComments(@Param('boardId') boardId: string) {
+    return await this.cmtService.getAllComments(+boardId);
+  }
 
   @Put()
   async editComment() {}

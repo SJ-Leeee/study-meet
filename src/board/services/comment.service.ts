@@ -31,4 +31,18 @@ export class CommentService {
       );
     }
   }
+
+  async getAllComments(boardId: number) {
+    const board = await this.boardRepo.findBoardById(boardId);
+    if (!board) {
+      throw new BusinessException(
+        'comment',
+        'post does not exist',
+        'post does not exist',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return await this.cmtRepo.findAllComments(boardId);
+  }
 }
