@@ -10,6 +10,8 @@ import { UploadModule } from 'src/upload/upload.module';
 import { BoardRepository } from './repositories/board.repository';
 import { BoardImageRepository } from './repositories/boardImage.repository';
 import { CommentController } from './controllers/comment.controller';
+import { CommentService } from './services/comment.service';
+import { CommentRepository } from './repositories/comment.repository';
 
 @Module({
   imports: [
@@ -18,6 +20,12 @@ import { CommentController } from './controllers/comment.controller';
     UploadModule,
   ],
   controllers: [BoardController, CommentController],
-  providers: [BoardService, BoardRepository, BoardImageRepository],
+  providers: [
+    BoardService,
+    BoardRepository,
+    BoardImageRepository,
+    CommentService,
+    CommentRepository,
+  ],
 })
 export class BoardModule {}

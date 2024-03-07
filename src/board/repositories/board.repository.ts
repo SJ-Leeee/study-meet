@@ -12,7 +12,7 @@ export class BoardRepository {
     private readonly boardRepo: Repository<BoardEntity>,
   ) {}
 
-  async postBoard(
+  async createBoard(
     user: UserEntity,
     postBoardDto: PostBoardDto,
   ): Promise<BoardEntity> {
@@ -34,7 +34,7 @@ export class BoardRepository {
   }
 
   // 모든게시물 조회
-  async getAllBoards(): Promise<BoardEntity[]> {
+  async findAllBoards(): Promise<BoardEntity[]> {
     return this.boardRepo
       .createQueryBuilder('b')
       .leftJoinAndSelect('b.boardImages', 'img')
@@ -50,7 +50,7 @@ export class BoardRepository {
   }
 
   // id로 게시물조회
-  async getBoardById(id: number): Promise<BoardEntity> {
+  async findBoardById(id: number): Promise<BoardEntity> {
     return await this.boardRepo
       .createQueryBuilder('b')
       .leftJoinAndSelect('b.boardImages', 'img')

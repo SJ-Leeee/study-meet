@@ -6,9 +6,9 @@ import { UploadService } from 'src/upload/upload.service';
 import { BoardImageRepository } from '../repositories/boardImage.repository';
 import { DataSource } from 'typeorm';
 import { BoardEntity } from 'src/entities/Boards';
-import { reqUserDto } from 'src/common/dto/requser.dto';
 import { BusinessException } from 'src/exception/businessException';
 import { Board_imageEntity } from 'src/entities/Board_image';
+import { ReqUserDto } from 'src/common/dto/reqUser.dto';
 
 @Injectable()
 export class BoardService {
@@ -39,10 +39,10 @@ export class BoardService {
       );
       const user = await this.userRepo.findUserById(userId);
       // 이미지와 보드저장
-      const board = await this.boardRepo.postBoard(user, postBoardDto);
+      const board = await this.boardRepo.createBoard(user, postBoardDto);
       await Promise.all(
         imgResDto.map(async (img) => {
-          await this.boardImgRepo.postBoardImg(board, img);
+          await this.boardImgRepo.createBoardImg(board, img);
         }),
       );
     } catch (err) {
@@ -55,16 +55,16 @@ export class BoardService {
 
   // 모든게시물조회
   async getAllBoards(): Promise<BoardEntity[]> {
-    return await this.boardRepo.getAllBoards();
+    return await this.boardRepo.findAllBoards();
   }
   // id로 게시물조회
   async getBoard(id: number): Promise<BoardEntity> {
-    return await this.boardRepo.getBoardById(id);
+    return await this.boardRepo.findBoardById(id);
   }
 
   // 게시물삭제
-  async deleteBoard(user: reqUserDto, boardId: number): Promise<void> {
-    const board = await this.boardRepo.getBoardById(boardId);
+  async deleteBoard(user: ReqUserDto, boardId: number): Promise<void> {
+    const board = await this.boardRepo.findBoardById(boardId);
     if (!board)
       throw new BusinessException(
         'board',
@@ -86,12 +86,12 @@ export class BoardService {
 
   // 게시물 수정
   async editBoard(
-    user: reqUserDto,
+    user: ReqUserDto,
     boardId: number,
     postBoardDto: PostBoardDto,
     files: Express.Multer.File[],
   ) {
-    const board = await this.boardRepo.getBoardById(boardId);
+    const board = await this.boardRepo.findBoardById(boardId);
     if (!board)
       throw new BusinessException(
         'board',
@@ -124,7 +124,7 @@ export class BoardService {
     );
     await Promise.all(
       imgResDto.map(async (img) => {
-        await this.boardImgRepo.postBoardImg(board, img);
+        await this.boardImgRepo.createBoardImg(board, img);
       }),
     );
   }

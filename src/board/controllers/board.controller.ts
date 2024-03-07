@@ -15,7 +15,7 @@ import { JwtAuthGuard } from 'src/guards/jwtAuth.guard';
 import { PostBoardDto } from '../dto/postBoardReq.dto';
 import { User } from 'src/common/decorator/user.decorator';
 import { BoardService } from '../services/board.service';
-import { reqUserDto } from 'src/common/dto/requser.dto';
+import { ReqUserDto } from 'src/common/dto/reqUser.dto';
 
 @Controller('board')
 export class BoardController {
@@ -49,7 +49,7 @@ export class BoardController {
 
   @UseGuards(JwtAuthGuard)
   @Delete('/:id')
-  async deleteBoard(@Param('id') boardId: string, @User() user: reqUserDto) {
+  async deleteBoard(@Param('id') boardId: string, @User() user: ReqUserDto) {
     await this.boardService.deleteBoard(user, +boardId);
     return { message: 'success' };
   }
@@ -64,7 +64,7 @@ export class BoardController {
   async editBoard(
     @Body() postBoardDto: PostBoardDto,
     @UploadedFiles() files: Express.Multer.File[],
-    @User() user: reqUserDto,
+    @User() user: ReqUserDto,
     @Param('id') boardId: string,
   ) {
     await this.boardService.editBoard(user, +boardId, postBoardDto, files);

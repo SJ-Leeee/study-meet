@@ -1,4 +1,4 @@
-export type reqUserDto = {
+export type ReqUserDto = {
   userId: number;
   userRole: string;
 };
