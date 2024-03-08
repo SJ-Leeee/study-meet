@@ -47,4 +47,15 @@ export class RoomRepository {
       .values(room)
       .execute();
   }
+
+  async findAllRooms(userId: number) {
+    return await this.roomRepo
+      .createQueryBuilder('r')
+      .leftJoinAndSelect('r.firstUser', 'fu')
+      .leftJoinAndSelect('r.secondUser', 'su')
+      .where('fu.userId = :userId', { userId })
+      .orWhere('su.userId = :userId', { userId })
+      .select(['r.roomId', 'fu.userId', 'fu.name', 'su.userId', 'su.name'])
+      .getMany();
+  }
 }

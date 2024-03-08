@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UserService } from 'src/auth/services/user.service';
 import { ReqUserDto } from 'src/common/dto/reqUser.dto';
 import { RoomRepository } from '../repositories/room.repository';
+import { BusinessException } from 'src/exception/businessException';
 
 @Injectable()
 export class RoomService {
@@ -24,5 +25,9 @@ export class RoomService {
     if (room) throw new HttpException('room exists', HttpStatus.CONFLICT);
 
     await this.roomRepository.createRoom(user, targetUser);
+  }
+
+  async findAllRooms(userId: number) {
+    return await this.roomRepository.findAllRooms(userId);
   }
 }

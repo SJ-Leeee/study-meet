@@ -11,7 +11,10 @@ export class RoomController {
   // 내 룸 조회
   @UseGuards(JwtAuthGuard)
   @Get()
-  async findMyRooms(@User() user: ReqUserDto) {}
+  async findMyRooms(@User() user: ReqUserDto) {
+    return await this.roomService.findAllRooms(+user.userId);
+  }
+
   // 룸 만들기
   @UseGuards(JwtAuthGuard)
   @Post('/:secondId')
