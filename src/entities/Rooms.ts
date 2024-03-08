@@ -13,7 +13,7 @@ import { ChatEntity } from './Chats';
 
 @Entity({ schema: 'study_meet', name: 'rooms' })
 export class RoomEntity {
-  @PrimaryGeneratedColumn({ type: 'int', name: 'chatId' })
+  @PrimaryGeneratedColumn({ type: 'int', name: 'roomId' })
   roomId: number;
 
   @CreateDateColumn()

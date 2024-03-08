@@ -27,12 +27,15 @@ export class RoomRepository {
       .getOne();
   }
 
-  async findRoomByroomId(roomId: number) {
+  async findRoomByRoomId(roomId: number) {
     return await this.roomRepo
-      .createQueryBuilder()
-      .where('roomId = :roomId', {
+      .createQueryBuilder('r')
+      .leftJoinAndSelect('r.firstUser', 'fu')
+      .leftJoinAndSelect('r.secondUser', 'su')
+      .where('r.roomId = :roomId', {
         roomId,
       })
+      .select(['r.roomId', 'fu.userId', 'su.userId'])
       .getOne();
   }
 

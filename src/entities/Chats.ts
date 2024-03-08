@@ -16,7 +16,7 @@ export class ChatEntity {
   @PrimaryGeneratedColumn({ type: 'int', name: 'chatId' })
   chatId: number;
 
-  @Column('text', { name: 'chatDetail' })
+  @Column('text', { name: 'message' })
   message: string;
 
   @Column('boolean')
