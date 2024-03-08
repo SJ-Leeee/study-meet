@@ -19,6 +19,8 @@ import { RefreshTokenEntity } from './entities/Refresh_token';
 import { UploadModule } from './upload/upload.module';
 import { BoardModule } from './board/board.module';
 import { EventModule } from './event/event.module';
+import { RoomEntity } from './entities/Rooms';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -45,6 +47,7 @@ import { EventModule } from './event/event.module';
         Board_imageEntity,
         AccessTokenEntity,
         RefreshTokenEntity,
+        RoomEntity,
       ],
       synchronize: false,
       keepConnectionAlive: true,
@@ -56,6 +59,7 @@ import { EventModule } from './event/event.module';
     UploadModule,
     BoardModule,
     EventModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService],

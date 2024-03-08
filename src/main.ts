@@ -13,7 +13,8 @@ async function bootstrap() {
     AppModule,
     getNestOptions(),
   );
-
+  const configService = app.get(ConfigService);
+  const port = configService.get<number>('PORT');
   app.useGlobalPipes(
     new ValidationPipe({
       exceptionFactory: ValidationPipeOption,
@@ -24,8 +25,7 @@ async function bootstrap() {
   app.useStaticAssets(join(__dirname, '..', 'static'));
 
   app.enableCors();
-  const configService = app.get(ConfigService);
-  const port = configService.get<number>('PORT');
+
   if (module.hot) {
     module.hot.accept();
     module.hot.dispose(() => app.close());
