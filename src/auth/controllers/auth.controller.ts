@@ -43,7 +43,7 @@ export class AuthController {
   @Post('/signup')
   async signupUser(@Body() signupUserDto: SignupUserDto): Promise<any> {
     await this.authService.signupUser(signupUserDto);
-    return;
+    return { message: '회원가입 성공' };
   }
 
   @ApiOperation({
