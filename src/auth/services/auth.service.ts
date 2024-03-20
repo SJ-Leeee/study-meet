@@ -151,16 +151,25 @@ export class AuthService {
 
   // 로그아웃
   async logout(accessToken: string, refreshToken: string): Promise<void> {
-    const [jtiAccess, jtiRefresh] = await Promise.all([
-      this.jwtService.verifyAsync(accessToken, {
-        secret: this.configService.get<string>('JWT_SECRET_KEY'),
-      }),
-      this.jwtService.verifyAsync(refreshToken, {
-        secret: this.configService.get<string>('JWT_SECRET_KEY'),
-      }),
-    ]);
+    try {
+      const [jtiAccess, jtiRefresh] = await Promise.all([
+        this.jwtService.verifyAsync(accessToken, {
+          secret: this.configService.get<string>('JWT_SECRET_KEY'),
+        }),
+        this.jwtService.verifyAsync(refreshToken, {
+          secret: this.configService.get<string>('JWT_SECRET_KEY'),
+        }),
+      ]);
 
-    await this.tokenBlackList(jtiAccess.jti, jtiRefresh.jti);
+      await this.tokenBlackList(jtiAccess.jti, jtiRefresh.jti);
+    } catch (error) {
+      throw new BusinessException(
+        'auth',
+        error.message,
+        error.message,
+        HttpStatus.FORBIDDEN,
+      );
+    }
   }
 
   // 로그아웃 - 토큰의 available false

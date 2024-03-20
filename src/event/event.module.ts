@@ -3,7 +3,6 @@ import { EventGateway } from './event.gateway';
 import { AuthModule } from 'src/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { WsJwtAuthStrategy } from './wsJwt.strategy';
 
 @Module({
   imports: [
@@ -15,6 +14,6 @@ import { WsJwtAuthStrategy } from './wsJwt.strategy';
       }),
     }),
   ],
-  providers: [EventGateway, Logger, WsJwtAuthStrategy],
+  providers: [EventGateway, Logger],
 })
 export class EventModule {}

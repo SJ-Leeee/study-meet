@@ -69,8 +69,4 @@ import { Tutor_certification_imageEntity } from 'src/entities/Tutor_certificatio
     AccessTokenRepository,
   ],
 })
-export class AuthModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(GetJtiMiddleware).forRoutes('auth/logout');
-  }
-}
+export class AuthModule {}

@@ -10,15 +10,6 @@ export class GetJtiMiddleware implements NestMiddleware {
       const accessToken = req.headers.authorization.split(' ')[1];
       const refreshToken = req.cookies['refreshToken'];
 
-      if (!accessToken || !refreshToken) {
-        throw new BusinessException(
-          'token',
-          'token is no111t exist',
-          'token is111 not exist',
-          HttpStatus.NOT_FOUND,
-        );
-      }
-
       req['accessToken'] = accessToken;
       req['refreshToken'] = refreshToken;
 
@@ -26,8 +17,8 @@ export class GetJtiMiddleware implements NestMiddleware {
     } catch (error) {
       throw new BusinessException(
         'token',
-        'token is not exist',
-        'token is not exist',
+        'token does not exist',
+        'token does not exist',
         HttpStatus.NOT_FOUND,
       );
     }

@@ -3,16 +3,27 @@ import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
-import { ValidationPipeOption, getNestOptions } from './app.option';
+import { AppOptions, ValidationPipeOption } from './app.option';
 import { BusinessExceptionFilter } from './exception/businessExceptionFilter';
 import { join } from 'path';
+import { SwaggerModule } from '@nestjs/swagger';
 declare const module: any;
 
 async function bootstrap() {
+  // 옵션클래스
+  const appOption = new AppOptions();
   const app = await NestFactory.create<NestApplication>(
     AppModule,
-    getNestOptions(),
+    appOption.getNestOptions(),
   );
+
+  // swagger 등록
+  const apiDocument = SwaggerModule.createDocument(
+    app,
+    appOption.initializeSwaggerDoc(),
+  );
+  SwaggerModule.setup('api/v1/docs', app, apiDocument);
+
   const configService = app.get(ConfigService);
   const port = configService.get<number>('PORT');
   app.useGlobalPipes(
