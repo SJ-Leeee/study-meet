@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BoardEntity } from 'src/entities/Boards';
-import { UserEntity } from 'src/entities/Users';
+import { BoardEntity } from '../../entities/Boards';
+import { UserEntity } from '../../entities/Users';
 import { Repository } from 'typeorm';
 import { PostBoardDto } from '../dto/postBoardReq.dto';
 

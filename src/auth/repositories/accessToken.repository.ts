@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AccessTokenEntity } from 'src/entities/Access_token';
-import { UserEntity } from 'src/entities/Users';
+import { AccessTokenEntity } from '../../entities/Access_token';
+import { UserEntity } from '../../entities/Users';
 import { Repository } from 'typeorm';
 
 @Injectable()

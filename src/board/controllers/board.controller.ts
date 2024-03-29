@@ -78,13 +78,13 @@ export class BoardController {
 
   // 특정 게시물 조회 api
   @ApiOperation({
-    summary: '게시물 생성',
-    description: 'jwt로 인증된 사용자가 게시물을 생성, 이미지 선택',
+    summary: '특정 게시물 조회',
+    description: '특정 게시물 조회',
   })
   @ApiParam({ name: 'id', description: '게시물 id로 검색', example: 5 })
   @ApiResponse({
     status: 200,
-    description: '게시물 조회',
+    description: '특정 게시물 조회',
   })
   @HttpCode(200)
   @Get('/:id')

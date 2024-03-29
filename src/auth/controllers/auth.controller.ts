@@ -14,12 +14,8 @@ import { LoginReqDto } from '../dto/loginReq.dto';
 import { Response, Request } from 'express';
 import { JwtRefreshGuard } from '../../guards/jwtRefresh.guard';
 import {
-  ApiBadRequestResponse,
-  ApiBearerAuth,
   ApiBody,
   ApiCookieAuth,
-  ApiHeader,
-  ApiHeaders,
   ApiOperation,
   ApiResponse,
   ApiTags,
@@ -30,10 +26,9 @@ import {
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @ApiOperation({
-    summary: '회원가입',
-    description: '회원가입',
-  })
+  /**
+   * 회원가입 API
+   */
   @ApiBody({ type: SignupUserDto })
   @ApiResponse({
     status: 201,
@@ -46,10 +41,9 @@ export class AuthController {
     return { message: '회원가입 성공' };
   }
 
-  @ApiOperation({
-    summary: '로그인',
-    description: '로그인',
-  })
+  /**
+   * 로그인 API
+   */
   @ApiBody({ type: LoginReqDto })
   @ApiResponse({
     status: 200,
@@ -66,10 +60,9 @@ export class AuthController {
     res.json({ message: '토큰 정상발급' });
   }
 
-  @ApiOperation({
-    summary: '로그아웃',
-    description: '헤더에 accessToken 쿠키에 refreshToken 필요',
-  })
+  /**
+   * 로그아웃 API
+   */
   @ApiResponse({
     status: 200,
     description: '로그아웃 성공',
@@ -89,11 +82,9 @@ export class AuthController {
   }
 
   // 액세스토큰 재발급
-  @ApiOperation({
-    summary: '액세스 토큰 재발급',
-    description:
-      '리프레시 토큰을 이용한 액세스 토큰 재발급 헤더에 accessToken 필요',
-  })
+  /**
+   * 액세스토큰 재발급 API
+   */
   @ApiCookieAuth('refreshToken')
   @ApiResponse({
     status: 200,

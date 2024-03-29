@@ -29,6 +29,7 @@ export class EventGateway
   connectedClients: {
     [socketId: string]: { userId: number; userName: string };
   } = {};
+
   @SubscribeMessage('message')
   handleMesssage(
     client: Socket,

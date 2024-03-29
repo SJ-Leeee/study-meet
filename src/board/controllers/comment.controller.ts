@@ -16,6 +16,7 @@ import { ReqUserDto } from 'src/common/dto/reqUser.dto';
 import { PostCommentDto } from '../dto/postCommentReq.dto';
 import {
   ApiBearerAuth,
+  ApiBody,
   ApiOperation,
   ApiParam,
   ApiResponse,
@@ -35,6 +36,7 @@ export class CommentController {
   })
   @ApiParam({ name: 'boardId', description: '게시물 id로 검색', example: 5 })
   @ApiBearerAuth()
+  @ApiBody({ type: PostCommentDto })
   @ApiResponse({
     status: 201,
     description: '댓글 생성',

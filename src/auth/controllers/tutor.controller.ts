@@ -11,12 +11,10 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { UploadService } from 'src/upload/upload.service';
 import { ApplyTutorDto } from '../dto/applyTutor.dto';
 import { TutorService } from '../services/tutor.service';
 import { JwtAuthGuard } from 'src/guards/jwtAuth.guard';
 import { User } from 'src/common/decorator/user.decorator';
-import { UploadResDto } from 'src/upload/dto/uploadRes.dto';
 import { AdminAuthGuard } from 'src/guards/adminAuth.guard';
 import { Tutor_infoEntity } from 'src/entities/Tutor_info';
 import {

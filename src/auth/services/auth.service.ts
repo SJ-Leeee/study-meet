@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { SignupUserDto } from '../dto/signupUser.dto';
-import { UserEntity } from 'src/entities/Users';
+import { UserEntity } from '../../entities/Users';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { TokenPayload } from '../dto/tokenPayload.dto';
@@ -10,7 +10,7 @@ import { LoginReqDto } from '../dto/loginReq.dto';
 import { ConfigService } from '@nestjs/config';
 import { AccessTokenRepository } from '../repositories/accessToken.repository';
 import { RefreshTokenRepository } from '../repositories/refreshToken.repository';
-import { BusinessException } from 'src/exception/businessException';
+import { BusinessException } from '../../exception/businessException';
 
 @Injectable()
 export class AuthService {

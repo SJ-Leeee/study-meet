@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AccessTokenEntity } from 'src/entities/Access_token';
-import { Tutor_certification_imageEntity } from 'src/entities/Tutor_certification_image';
-import { Tutor_infoEntity } from 'src/entities/Tutor_info';
+import { Tutor_certification_imageEntity } from '../../entities/Tutor_certification_image';
+import { Tutor_infoEntity } from '../../entities/Tutor_info';
 import { Repository } from 'typeorm';
 import { ApplyTutorDto } from '../dto/applyTutor.dto';
-import { UserEntity } from 'src/entities/Users';
+import { UserEntity } from '../../entities/Users';
 import { UploadResDto } from 'src/upload/dto/uploadRes.dto';
 
 @Injectable()
