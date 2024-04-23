@@ -23,6 +23,9 @@ export class AuthService {
   ) {}
 
   // 회원가입
+  async test() {
+    return await this.userRepo.findUserByEmail('test');
+  }
   async signupUser(signupUserDto: SignupUserDto) {
     const user = await this.userRepo.findUserByEmail(signupUserDto.email);
     if (user) {
@@ -77,12 +80,12 @@ export class AuthService {
   }
 
   // 로그인 - 액세스토큰 저장
-  private async createAccessToken(user: UserEntity, payload: TokenPayload) {
+  private createAccessToken(user: UserEntity, payload: TokenPayload) {
     const expiresIn = this.configService.get<string>('ACCESS_TOKEN_EXPIRY');
     const accessToken = this.jwtService.sign(payload, { expiresIn });
     const expiresAt = this.calculateExpiry(expiresIn);
 
-    await this.accessTokenRepo.saveAccessToken(
+    this.accessTokenRepo.saveAccessToken(
       user,
       accessToken,
       payload.jti,
