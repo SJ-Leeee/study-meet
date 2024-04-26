@@ -11,7 +11,7 @@ export class AccessTokenRepository {
     private readonly accessTokenRepo: Repository<AccessTokenEntity>,
   ) {}
 
-  async saveAccessToken(
+  saveAccessToken(
     user: UserEntity,
     token: string,
     jti: string,
@@ -23,7 +23,7 @@ export class AccessTokenRepository {
     accessToken.jti = jti;
     accessToken.expiresAt = expiresAt;
 
-    return this.accessTokenRepo.save(accessToken);
+    this.accessTokenRepo.save(accessToken);
   }
 
   async getAccessWithJti(jti: string): Promise<AccessTokenEntity> {

@@ -1,0 +1,14 @@
+version: '3'
+services:
+  backend:
+    image: cjstkrak/studymeet-backend-app
+    container_name: study-meet-backend
+    volumes:
+      - /app/node_modules
+      - ./:/app
+    # environment:
+    #   MYSQL_HOST: ${MYSQL_HOST}
+    #   MYSQL_USER: ${MYSQL_USER}
+    #   MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    #   MYSQL_DATABASE: ${MYSQL_DATABASE}
+    #   MYSQL_PORT: ${MYSQL_PORT}

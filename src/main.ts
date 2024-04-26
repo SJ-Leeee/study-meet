@@ -5,7 +5,7 @@ import { ValidationPipe } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
 import { AppOptions, ValidationPipeOption } from './app.option';
 import { BusinessExceptionFilter } from './exception/businessExceptionFilter';
-import { join } from 'path';
+// import { join } from 'path';
 import { SwaggerModule } from '@nestjs/swagger';
 declare const module: any;
 
@@ -33,7 +33,7 @@ async function bootstrap() {
   );
   app.use(cookieParser());
   app.useGlobalFilters(new BusinessExceptionFilter());
-  app.useStaticAssets(join(__dirname, '..', 'static'));
+  // app.useStaticAssets(join(__dirname, '..', 'static'));
 
   app.enableCors();
 
