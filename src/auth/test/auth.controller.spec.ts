@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule, getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { AuthService } from '../auth.service';
+import { AuthService } from 'src/auth/services/auth.service';
 import { UserRepository } from 'src/auth/repositories/user.repository';
 import { AccessTokenRepository } from 'src/auth/repositories/accessToken.repository';
 import { RefreshTokenRepository } from 'src/auth/repositories/refreshToken.repository';
@@ -39,7 +39,7 @@ const mockConfigService = {
 //   findUserByEmail: jest.fn(),
 // };
 
-describe('AuthService', () => {
+describe('AuthController', () => {
   let service: AuthService;
   let jwtService: JwtService;
   let configService: ConfigService;
