@@ -4,18 +4,14 @@ services:
     build:
       dockerfile: Dockerfile.dev
       context: ./
-    ports:
-      - '3000:3000'
-    volumes:
-      - /app/backend/node_modules
-      - ./:/app/backend
     command: ['npm', 'run', 'start']
 
-  test:
-    build:
-      dockerfile: Dockerfile.dev
-      context: ./
-    volumes:
-      - /app/backend/node_modules
-      - ./:/app/backend
-    command: ['npm', 'run', 'test']
+  nginx:
+      build:
+        dockerfile: Dockerfile
+        context: ./nginx
+      container_name: study-meet-nginx
+      ports:
+        - "80:80"
+      links:
+        - backend
