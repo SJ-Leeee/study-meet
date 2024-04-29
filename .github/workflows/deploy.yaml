@@ -21,7 +21,7 @@ jobs:
       - name: Generate deploym!ent package
         run: zip -r deploy.zip . -x '*.git*'
 
-      - name: Deploy to EB!
+      - name: Deploy to EB!2
         uses: einaregilsson/beanstalk-deploy@v18
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
