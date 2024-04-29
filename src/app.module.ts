@@ -31,8 +31,8 @@ import { ChatModule } from './chat/chat.module';
       type: 'mysql',
       host: process.env.MYSQL_HOST,
       port: +process.env.MYSQL_PORT,
-      username: process.env.MYSQL_USERNAME,
-      password: process.env.MYSQL_PASSWORD,
+      username: process.env.MYSQL_USER,
+      password: process.env.MYSQL_ROOT_PASSWORD,
       database: process.env.MYSQL_DATABASE,
       entities: [
         UserEntity,
