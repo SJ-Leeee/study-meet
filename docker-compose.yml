@@ -1,11 +1,22 @@
 version: '3'
 services:
+  nginx:
+    restart: always
+    image: cjstkrak/studymeet-nginx
+    container_name: study-meet-nginx
+    ports:
+      - '80:80'
+    mem_limit: 128m
+    links:
+      - backend
   backend:
     image: cjstkrak/studymeet-backend-app
     container_name: study-meet-backend
     volumes:
       - /app/node_modules
       - ./:/app
+    ports:
+      - ports
     environment:
       MYSQL_HOST: ${MYSQL_HOST}
       MYSQL_USER: ${MYSQL_USER}
