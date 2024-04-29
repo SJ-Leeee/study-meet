@@ -24,8 +24,7 @@ async function bootstrap() {
   );
   SwaggerModule.setup('api/v1/docs', app, apiDocument);
 
-  const configService = app.get(ConfigService);
-  const port = configService.get<number>('PORT');
+  const port = 3000;
   app.useGlobalPipes(
     new ValidationPipe({
       exceptionFactory: ValidationPipeOption,
@@ -41,7 +40,7 @@ async function bootstrap() {
     module.hot.accept();
     module.hot.dispose(() => app.close());
   }
-  await app.listen(3000);
+  await app.listen(port);
   console.log(`server on port: ${port}`);
 }
 bootstrap();
