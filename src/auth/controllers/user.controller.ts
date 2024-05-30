@@ -9,7 +9,6 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from '../services/user.service';
-import { UserEntity } from 'src/entities/Users';
 import { AdminAuthGuard } from '../../guards/adminAuth.guard';
 import { EditRoleDto } from '../dto/editRole.dto';
 import {
@@ -19,6 +18,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { UserEntity } from 'src/entities/Users';
 
 @ApiTags('User')
 @Controller('user')
