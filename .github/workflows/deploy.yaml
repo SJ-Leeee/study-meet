@@ -28,8 +28,8 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
           aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-          application_name: docker-fullstack-app-v3
-          environment_name: Docker-fullstack-app-v3-env
+          application_name: study-meet-app
+          environment_name: Study-meet-app-env
           existing_bucket_name: elasticbeanstalk-ap-northeast-2-654654225421
           region: ap-northeast-2
           version_label: ${{ github.sha }}
